@@ -1,0 +1,55 @@
+{
+    "compilerOptions": {
+    //   "plugins": [
+    //     {
+    //         "transform": "typescript-plugin-styled-components",
+    //         "type": "config",
+    //         "minify": true,
+    //         "ssr": true
+    //     }
+    //   ],
+      "target": "es5",
+      "module": "commonjs",
+      "lib": [
+        "es6",
+        "DOM",
+        "esnext.asynciterable"
+      ],
+      "allowJs": true,
+      "jsx": "react",
+      "sourceMap": true,
+      "outDir": "./build/dist",
+      "rootDir": "./src",
+      "strict": true,
+      "noImplicitAny": false,
+      "strictNullChecks": false,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noImplicitReturns": true,
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/interfaces"
+      ],
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": false,
+      "allowSyntheticDefaultImports": true,
+      "noFallthroughCasesInSwitch": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts",
+      "src/setupTests.ts",
+      "webpack.config.js",
+      "./src/Components/Shared/ErrorBoundary.tsx"
+    ]
+  }
+  
