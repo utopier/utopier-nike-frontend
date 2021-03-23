@@ -171,6 +171,13 @@
     - config/webpack/webpack.config.prod.js 코드 수정
 ---
 ## 6. DataContainer(Apollo Client)
+- npm i @apollo/client graphql subscriptions-transport-ws
+- Apollo
+    - Client.ts
+    - LocalState.ts
+- src/index.tsx
+    - React App에 Apollo Client 적용
+- npm run start
 ---
 ## 15. Devops
 ---
