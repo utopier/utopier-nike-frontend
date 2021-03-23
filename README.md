@@ -108,6 +108,19 @@
         ```
 ---
 ## 4. Routing(react-router-dom)
+- npm i react-router-dom
+- npm i -D react-router-dom
+- mkdir src/Routes
+- Routes 기본 코드 작성
+    - index.tsx
+    - Home.tsx
+    - SignUp.tsx
+    - Login.tsx
+    - Products.tsx
+    - Product.tsx
+    - Cart.tsx
+- src/index.tsx
+    - Routes import
 ---
 ## 5. Bundler(TypeScript, Babel, Webpack)
 ---
