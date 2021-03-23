@@ -122,7 +122,32 @@
 - src/index.tsx
     - Routes import
 ---
-## 5. Bundler(TypeScript, Babel, Webpack)
+## 5. Build & Deploy
+- touch tsconfig.prod.json
+    ```json
+    {
+     "extends": "./tsconfig.json"
+    }
+    ```
+- npm run build
+- gh-pages 
+    - npm i -D gh-pages
+- package.json
+    ```json
+    {
+        //..
+        "scripts":{
+            //..
+            "predeploy": "npm run build",
+            "deploy": "gh-pages -d build"
+            //..
+        }
+        //..
+        "homepage": "https://utopier.github.io/utopier-nike-front/",
+        //..
+    }
+    ```
+- npm run deploy
 ---
 ## 6. DataContainer(Apollo Client)
 ---
