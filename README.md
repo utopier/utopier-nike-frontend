@@ -149,15 +149,37 @@
     ```
 - npm run deploy
 ---
+## 10. CSS In Js(styled-component)
+- npm i styled-components styled-reset
+- npm i -D @types/styled-components
+- Styles
+    - GlobalStyles.tsx
+    - theme.ts
+- src/Routes/index.tsx
+    - GlobalStyles 적용
+    - theme 적용
+- npm run start
+- npm run deploy
+- styled-component build 적용
+    - babel.config.json
+        ```json
+        {
+            "plugins": ["babel-plugin-styled-components"]
+        }
+        ```
+    - npm i - typescript-plugin-styled-components
+    - config/webpack/webpack.config.prod.js 코드 수정
+---
 ## 6. DataContainer(Apollo Client)
+---
+## 15. Devops
+---
+## 16. CICD(Test,Build,Deploy)
 ---
 ## 7. SPA
 ---
+---
 ## 8. Figma
----
-## 9. Storybook
----
-## 10. CSS In Js(styled-component)
 ---
 ## 11. UIUX
 ---
@@ -166,9 +188,4 @@
 ## 13. Performance
 ---
 ## 14. Security
----
-## 15. Devops
----
-## 16. CICD(Test,Build,Deploy)
-
 ---

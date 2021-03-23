@@ -31,6 +31,8 @@
     "resolve": "1.6.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.19.0",
+    "styled-components": "^5.2.1",
+    "styled-reset": "^4.3.4",
     "sw-precache-webpack-plugin": "0.11.4",
     "ts-jest": "22.0.1",
     "ts-loader": "^2.3.7",
@@ -55,12 +57,14 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.9",
     "babel-jest": "^26.6.3",
     "cypress": "^6.8.0",
     "gh-pages": "^3.1.0",
     "jest": "^26.6.3",
     "start-server-and-test": "^1.12.1",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "typescript-plugin-styled-components": "^1.4.4"
   },
   "scripts": {
     "start": "node scripts/start.js",
