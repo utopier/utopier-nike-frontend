@@ -73,7 +73,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://utopier.github.io/utopier-nike-front/",
+  "homepage": "https://utopier.github.io/utopier-nike-frontend/",
   "keywords": [],
   "author": "",
   "license": "ISC",
