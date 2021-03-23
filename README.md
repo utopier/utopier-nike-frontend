@@ -206,6 +206,7 @@
      - Github -> /github subscribe utopier/utopier-blog-frontend -> /github subscribe list -> /github subscribe list features
    - Github
      - Accout Settings -> Applications -> Slack -> Repository access
+    - /github subscribe utopier/utopier-nike-frontend commits:all
 4. [O]jira + Slack
    - Slack
      - App -> Jira Cloud
