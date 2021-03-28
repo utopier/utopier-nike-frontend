@@ -185,17 +185,35 @@
 - css(방법론, trigger, performance)
 - markup(Semantic, Performance)
 ## 6. SignUp Page
-[]
+[O]
 - Input
 ## 7. Login Page
-[]
-- Apollo Client : isLoggedIn & Me & Cart & Products
+[O]
+## Apollo Client(Cache,LocalState,Fetching,Test,Performance)
+- Fetching
+- Caching
+- Pagination
+- LocalState
+- Test
+- Performance
+- Networking
+- Nike App Data 
+    - isLoggedIn
+    - Me
+    - Cart
+    - Products
 ## 8. Products Page
 []
+- Infinity Scrolling
+- Like
 ## 9. Product Page
 []
+- Review CRUD
+- Comment CRUD
+- Cart CD
 ## 10. Cart Page
 []
+- Cart CRUD
 ---
 ## 11. Test
 ## 12. Refactoring(Design, ReactComponent, ApolloClient, DRY)
