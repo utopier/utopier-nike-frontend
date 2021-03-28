@@ -6,8 +6,12 @@ import Footer from './Footer';
 
 const AppLayoutContainer = styled.div`
     .content {
-        height: 600px;
         padding: 0 38px;
+    }
+    @media(max-width:645px){
+        .content{
+            padding: 0 12px;
+        }
     }
 `
 

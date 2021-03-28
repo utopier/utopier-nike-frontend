@@ -21,4 +21,7 @@ export default createGlobalStyle`
     input:focus{
         outline:none;
     }
+    button{
+      outline:none;
+    }
 `;

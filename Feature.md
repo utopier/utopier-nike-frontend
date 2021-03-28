@@ -176,12 +176,24 @@
         - [O] index.tsx에서 ApolloProvider로 Apollo Client App전체에 적용. 
 2. LocalState
 ## 4. AppLayout
-1. Header
-2. Footer
+1. [O]Header
+2. [O]Footer
 3. Routes index.tsx
 ## 5. Home Page
+[]
 ## 6. SignUp Page
+[]
 ## 7. Login Page
+[]
 ## 8. Products Page
+[]
 ## 9. Product Page
+[]
 ## 10. Cart Page
+[]
+---
+## 11. Test
+## 12. Refactoring
+## 13. UIUX, Responsive
+## 14. Performance
+## 15. Security
