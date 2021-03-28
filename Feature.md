@@ -180,11 +180,16 @@
 2. [O]Footer
 3. Routes index.tsx
 ## 5. Home Page
-[]
+[O]
+- img srcset
+- css(방법론, trigger, performance)
+- markup(Semantic, Performance)
 ## 6. SignUp Page
 []
+- Input
 ## 7. Login Page
 []
+- Apollo Client : isLoggedIn & Me & Cart & Products
 ## 8. Products Page
 []
 ## 9. Product Page
@@ -193,7 +198,7 @@
 []
 ---
 ## 11. Test
-## 12. Refactoring
+## 12. Refactoring(Design, ReactComponent, ApolloClient, DRY)
 ## 13. UIUX, Responsive
 ## 14. Performance
 ## 15. Security
