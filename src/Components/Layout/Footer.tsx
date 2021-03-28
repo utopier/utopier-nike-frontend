@@ -2,11 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
+  background-color: #111;
+  padding: 10px 10px;
+  color: white;
 `;
 
-const FooterNav = styled.div``;
+const FooterNav = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid gray;
+  justify-items: center;
+  dd {
+    color: #999999;
+    margin: 0;
+  }
+  dt {
+    padding-bottom: 5px;
+  }
+  @media (max-width: 530px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+`;
 
-const FooterCopy = styled.div``;
+const FooterCopy = styled.div`
+  display: grid;
+  justify-content: center;
+  padding: 10px;
+  div {
+      a{
+        color: white;
+      }
+    padding: 10px;
+  }
+`;
+
 
 const Footer: React.FC = () => {
     return (
