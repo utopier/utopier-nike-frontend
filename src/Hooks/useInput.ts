@@ -11,3 +11,4 @@ export const useInput = (initValue = "") => {
 
   return [value, handler, setValue] as [string, onChangeType, typeof setValue];
 };
+
