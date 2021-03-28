@@ -13,7 +13,6 @@ export default createGlobalStyle`
     body {
         font-size:14px;
         font-familiy: 'Open Sans', sans-serif;
-        padding-top: 140px;
     }
     a {
         color: black;

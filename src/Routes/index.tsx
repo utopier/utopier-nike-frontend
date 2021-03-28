@@ -12,22 +12,26 @@ import SignUp from './SignUp';
 import Login from './Login';
 import Cart from './Cart';
 
+import AppLayout from '../Components/Layout'
+
 const Routes = () => {
     return (
         <ThemeProvider theme={theme}>
             <>
                 <GlobalStyles />
-                <Router>
-                    <Switch>
-                        <Route exact={true} path="/" component={Home} />
-                        <Route path="/products" component={Products} />
-                        <Route path="/product/:productId" component={Product} />
-                        <Route path="/cart" component={Cart} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/signup" component={SignUp} />
-                        <Redirect from="*" to="/" />
-                    </Switch>
-                </Router>
+                <AppLayout>
+                    <Router>
+                        <Switch>
+                            <Route exact={true} path="/" component={Home} />
+                            <Route path="/products" component={Products} />
+                            <Route path="/product/:productId" component={Product} />
+                            <Route path="/cart" component={Cart} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/signup" component={SignUp} />
+                            <Redirect from="*" to="/" />
+                        </Switch>
+                    </Router>
+                </AppLayout>
             </>
         </ThemeProvider>
     )
