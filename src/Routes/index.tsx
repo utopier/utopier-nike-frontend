@@ -12,15 +12,16 @@ import SignUp from './SignUp';
 import Login from './Login';
 import Cart from './Cart';
 
-import AppLayout from '../Components/Layout'
+import AppLayout from '../Components/Layout';
 
 const Routes = () => {
     return (
         <ThemeProvider theme={theme}>
             <>
                 <GlobalStyles />
-                <AppLayout>
+                
                     <Router>
+                    <AppLayout>
                         <Switch>
                             <Route exact={true} path="/" component={Home} />
                             <Route path="/products" component={Products} />
@@ -30,8 +31,8 @@ const Routes = () => {
                             <Route path="/signup" component={SignUp} />
                             <Redirect from="*" to="/" />
                         </Switch>
+                        </AppLayout>
                     </Router>
-                </AppLayout>
             </>
         </ThemeProvider>
     )

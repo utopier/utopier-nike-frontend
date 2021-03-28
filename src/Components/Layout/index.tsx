@@ -12,10 +12,11 @@ const AppLayoutContainer = styled.div`
 `
 
 const AppLayout = ({children}) => {
+    const isLoggedIn = false;
     return (
         <>
             <AppLayoutContainer>
-                <Header/>
+                <Header isLoggedIn={isLoggedIn} />
                 <div className="content">
                 {...children}
                 </div>
