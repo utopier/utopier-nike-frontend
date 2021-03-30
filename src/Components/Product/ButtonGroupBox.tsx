@@ -77,10 +77,11 @@ const ButtonGroupBox = React.memo(() => {
 
   if(data && data.createProductInCart){
     console.log(data);
-    cartProductsVar({id: cartProductsVar().id, products:[...cartProductsVar().products,data.createProductInCart]})
-  }
+    cartProductsVar([...cartProductsVar(),data.createProductInCart])
+    }
 
   const onClickCartBtn = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log('onClick CartBtn')
     e.preventDefault();
     try {
       if (userData && userData.me.id) {

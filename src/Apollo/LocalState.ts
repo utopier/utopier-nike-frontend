@@ -15,7 +15,7 @@ interface ICartProduct {
   
   interface ICartProducts {
     id: string;
-    products:ICartProduct[];
+    product:ICartProduct;
   }
   
   const initGetTodosVar = {
@@ -41,6 +41,6 @@ interface ICartProduct {
 
 export const isLoggedInVar = makeVar(!!localStorage.getItem('token'));
 export const meDataVar = makeVar<IMeDataVar | undefined>(undefined);
-export const cartProductsVar = makeVar<ICartProducts>({} as ICartProducts);
+export const cartProductsVar = makeVar<ICartProducts[]>([] as ICartProducts[]);
 export const getProductsVar = makeVar(initGetTodosVar);
 export const productList = makeVar([]);
