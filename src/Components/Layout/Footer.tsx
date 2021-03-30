@@ -39,6 +39,7 @@ const FooterCopy = styled.div`
 
 
 const Footer: React.FC = () => {
+    console.log('footer')
     return (
         <>
             <FooterContainer>

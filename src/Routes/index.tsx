@@ -1,5 +1,4 @@
 import React from 'react';
-
 import GlobalStyles from '../Styles/GlobalStyles';
 import theme from '../Styles/theme';
 import { ThemeProvider } from 'styled-components';
@@ -14,12 +13,12 @@ import Cart from './Cart';
 
 import AppLayout from '../Components/Layout';
 
+
 const Routes = () => {
     return (
         <ThemeProvider theme={theme}>
             <>
                 <GlobalStyles />
-                
                     <Router>
                     <AppLayout>
                         <Switch>

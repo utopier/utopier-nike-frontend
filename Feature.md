@@ -189,21 +189,8 @@
 - Input
 ## 7. Login Page
 [O]
-## Apollo Client(Cache,LocalState,Fetching,Test,Performance)
-- Fetching
-- Caching
-- Pagination
-- LocalState
-- Test
-- Performance
-- Networking
-- Nike App Data 
-    - isLoggedIn
-    - Me
-    - Cart
-    - Products
 ## 8. Products Page
-[]
+[O]
 - Infinity Scrolling
 - Like
 ## 9. Product Page
@@ -214,6 +201,19 @@
 ## 10. Cart Page
 []
 - Cart CRUD
+## Apollo Client(Cache,LocalState,Fetching,Test,Performance)
+- Fetching
+- Caching
+- Pagination
+- LocalState
+- Test
+- Performance
+- Networking
+- [] Nike App Data 
+    - isLoggedIn
+    - Me
+    - Cart
+    - Products
 ---
 ## 11. Test
 ## 12. Refactoring(Design, ReactComponent, ApolloClient, DRY)

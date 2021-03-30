@@ -36,12 +36,7 @@ interface ICartProduct {
   interface IMeDataVarLike {
     __typename?: string;
     id: string;
-    product: IMeDataVarLikeProduct
-  }
-
-  interface IMeDataVarLikeProduct {
-    __typename?: string;
-    id: string;
+    product:{id: string};
   }
 
 export const isLoggedInVar = makeVar(!!localStorage.getItem('token'));

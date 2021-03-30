@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
+    position: fixed;
+    width: 100%;
     height: 96px;
     z-index: 1;
     .responsive-header {
@@ -41,6 +43,7 @@ const HeaderContainer = styled.header`
     .nk_gnb {
         height: 60px;
         padding: 10px 38px;
+        background-color: white;
         .pre_nav_box{
             display: flex;
             justify-content: space-between;
@@ -92,6 +95,7 @@ const HeaderContainer = styled.header`
 
 const ResponsiveHeader = styled.header`
     padding: 10px 10px 0;
+    background-color: white;
     .responsive-header__icons {
     display: flex;
     div {
@@ -193,6 +197,7 @@ interface IHeaderProps {
   }
 
 const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
+    console.log('header')
     const history = useHistory()
 
     const onClickLogout = () => {
