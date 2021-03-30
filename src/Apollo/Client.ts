@@ -45,7 +45,7 @@ const httpLink = new HttpLink({
   // uri:  process.env.NODE_ENV === 'development'
   // ? 'http://localhost:4000/graphql'
   // : 'https://utopier-nike-backend.herokuapp.com/graphql'
-  uri: 'https://utopier-nike-backend.herokuapp.com/graphql'
+  uri: 'http://localhost:4000/graphql'
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -62,7 +62,7 @@ const wsLink = new WebSocketLink({
   // uri:  process.env.NODE_ENV === 'development'
   // ? 'ws://localhost:4000/graphql'
   // : 'wss://utopier-nike-backend.herokuapp.com/graphql'
-  uri: 'wss://utopier-nike-backend.herokuapp.com/graphql',
+  uri: 'ws://localhost:4000/graphql',
   options: {
     reconnect: true,
     // connectionParams: {
