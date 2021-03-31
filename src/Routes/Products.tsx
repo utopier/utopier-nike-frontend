@@ -1,5 +1,5 @@
 import React from 'react';
-import { gql, useQuery,useLazyQuery,useReactiveVar  } from '@apollo/client';
+import { gql, useQuery,useLazyQuery, NetworkStatus  } from '@apollo/client';
 import { meDataVar , getProductsVar, productList} from '../Apollo/LocalState'
 
 import ProductCard from '../Components/ProductCard';
@@ -101,10 +101,11 @@ interface IMeResultObjLike{
 let productCount
 
 const Products : React.FC= React.memo(() => {
-  useReactiveVar(getProductsVar)
-  const { loading, error, data} = useQuery<IGetProducts>(GET_PRODUCTS, {variables:getProductsVar()});
+  console.log('products Component')
+  // useReactiveVar(getProductsVar)
+  const { loading, error, data, refetch, networkStatus } = useQuery<IGetProducts>(GET_PRODUCTS, {variables:{skip:0, take:10}});
   const [getNewProducts, {loading: newProductsLoading, error: newProductsError, data: newProductsData}] = useLazyQuery(GET_PRODUCTS);
-  const {data: meData, loading: meLoading, error: meError} = useQuery<IMeResult>(ME)
+  const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
 
 	React.useEffect(() => {
 		window.addEventListener('scroll',handleScroll)
@@ -112,10 +113,44 @@ const Products : React.FC= React.memo(() => {
 			window.removeEventListener('scroll', handleScroll)
 		}
 	})
+
+  let errorStatus;
   console.log('meLoading : ', meLoading);
-  if(loading && meLoading) return <Loader/>;
-  console.log('meData : ', meData);
-  if(error && meError && newProductsError) return <Error error={error || meError}/>;
+  console.log('getProducts Loading : ', loading);
+  console.log('newProductsLoading : ',newProductsLoading);
+  console.log(networkStatus);
+  console.log(networkStatus === NetworkStatus.refetch);
+  if(loading || meLoading) return <Loader/>;
+
+  if(error) {
+    errorStatus = error;
+    console.log(errorStatus);
+    console.log(typeof errorStatus.message);
+    console.log(errorStatus.message.match("findFirst()")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')) ;
+    console.log("productList is Empty",!!productList());
+    if (!!productList() && errorStatus.message.match("findFirst()")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
+      refetch();
+      console.log('refetch...');
+      console.log(networkStatus);
+      console.log(networkStatus === NetworkStatus.refetch);
+      // return <Loader/>;
+    } else {
+      return <Error error={error || meError}/>;
+    }
+  }
+
+  if(meError){
+    errorStatus = meError;
+    console.log(errorStatus);
+    if(localStorage.getItem('token') && !!meDataVar()) {
+      meRefetch();
+      console.log('me refetch...');
+      console.log(networkStatus);
+      console.log(networkStatus === NetworkStatus.refetch);
+    } else {
+      return <Error error={error || meError}/>;
+    }
+  }
   
   const handleScroll = () => {
     if(document.documentElement.scrollHeight - (document.documentElement.scrollTop + document.documentElement.clientHeight) <= 280){
@@ -127,7 +162,6 @@ const Products : React.FC= React.memo(() => {
 		}		
    }
 
-   console.log('meData : ', meData);
    if(meData && meData.me){
       console.log('meData : ', meData);
       meDataVar({...meData.me})
@@ -160,6 +194,7 @@ const Products : React.FC= React.memo(() => {
               />
             ))}
             {newProductsLoading ? <Loader/> : null}
+            {newProductsError ? <Error error={newProductsError}/> : null}
         </ProductsWapper>
       </ProductsContainer>
     </>

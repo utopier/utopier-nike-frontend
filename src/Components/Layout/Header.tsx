@@ -258,8 +258,8 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                         <div className="nk_brand--desk_user">
                             <ul>
                                 <li>고객센터</li>
-                                <li>멤버 가입</li>
-                                <li>로그인</li>
+                                <li><Link to="signup">멤버 가입</Link></li>
+                                <li><Link to="/login">로그인</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -267,14 +267,16 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                 <div className="nk_gnb">
                     <div className="pre_nav_box">
                         <div className="pre_nav_box--logo">
+                            <Link to="/">
                             <img src="/image/nikelogo.png" width="50px" height="28px"/>
+                            </Link>
                         </div>
                         <ul>
-                            <li>New Releases</li>
-                            <li>Men</li>
-                            <li>Women</li>
-                            <li>Kids</li>
-                            <li>Sale</li>
+                            <li><Link to="/products">New Releases</Link></li>
+                            <li><Link to="/products">Men</Link></li>
+                            <li><Link to="/products">Women</Link></li>
+                            <li><Link to="/products">Kids</Link></li>
+                            <li><Link to="/products">Sale</Link></li>
                         </ul>
                         <div className="pre_nav-box--btn-groups">
                             <div className="pre_nav_box--search">
@@ -286,7 +288,9 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                                     <img src="/icon/emptyHeart.svg" width="24px" height="24px"/>
                                 </div>
                                 <div className="pre_nav_box--btn_group--cart">
-                                    <img src="/icon/cart.png" width="24px" height="24px"/>
+                                    <Link to="/cart">
+                                        <img src="/icon/cart.png" width="24px" height="24px"/>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

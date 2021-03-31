@@ -66,7 +66,7 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
   // const liked = meDataVar().likes.find(v => id === v.product.id)
   // const client = useApolloClient()
   // const liked = client.cache.readQuery<IMeResult>({query:ME}).me.likes.find(v => id === v.product.id)
-  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE,{
+  const [toggleLikeMutation,{loading, error}] = useMutation(TOGGLE_LIKE,{
     update(cache,{data:{toggleLike}}:any){
       console.log('update me cache')
       const {me}:IMeResult = cache.readQuery({query:ME})
@@ -104,8 +104,9 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
       }
     }
   })
-  console.log(meDataVar())
-
+  
+  console.log('toggleMutation Loading : ', loading);
+  console.log('toggleMutation error : ', error);
   const onClickHeart = (e) => {
     console.log('onClickHeart')
     e.preventDefault()
@@ -116,10 +117,6 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
     })
   }
 
-  console.log(id)
-  console.log(imageUrls)
-
-  console.log(meDataVar())
   return (
     <>
       <ProductsListWapper>
