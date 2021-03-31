@@ -139,6 +139,16 @@ const Products : React.FC= React.memo(() => {
     }
   }
 
+  if(newProductsError) {
+    errorStatus = newProductsError;
+    if (errorStatus){
+      getNewProducts();
+      console.log('getNewProducts...');
+    } else {
+      return <Error error={error}/>;
+    }
+  }
+
   // if(meError){
   //   errorStatus = meError;
   //   console.log(errorStatus);
@@ -195,8 +205,7 @@ const Products : React.FC= React.memo(() => {
                 subtitle={product.subtitle}
               />
             ))}
-            {newProductsLoading ? <Loader/> : null}
-            {newProductsError ? <Error error={newProductsError}/> : null}
+            {newProductsLoading || newProductsError ? <Loader/> : null}
         </ProductsWapper>
       </ProductsContainer>
     </>
