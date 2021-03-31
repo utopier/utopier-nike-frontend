@@ -108,7 +108,10 @@ const Routes = () => {
       if(localStorage.getItem('token') && errorStatus && !meDataVar()) {
         meRefetch();
         console.log('me refetch...');
-      } else {
+      } else if (!localStorage.getItem('token')){
+        console.log('login 안됨')
+      } 
+      else {
         return <Error error={meError}/>;
       }
     }
@@ -118,7 +121,9 @@ const Routes = () => {
       if((localStorage.getItem('token') && !cartProductsVar()) || (localStorage.getItem('token') && errorStatus)) {
         cartRefetch();
         console.log('cart refetch...');
-      } else {
+      }else if (!localStorage.getItem('token')){
+        console.log('login 안됨')
+      }  else {
         return <Error error={cartError}/>;
       }
     }
