@@ -253,7 +253,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                 <div className="pre_header">
                     <div className="nk_brand">
                         <div className="nk_brand--logo">
-                            <img src="/image/jordan.png" width="20px" height="20px"/>
+                            <img src={`${process.env.PUBLIC_URL}/image/jordan.png`} width="20px" height="20px"/>
                         </div>
                         <div className="nk_brand--desk_user">
                             <ul>
@@ -276,7 +276,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                     <div className="pre_nav_box">
                         <div className="pre_nav_box--logo">
                             <Link to="/">
-                            <img src="/image/nikelogo.png" width="50px" height="28px"/>
+                            <img src={`${process.env.PUBLIC_URL}/image/nikelogo.png`} width="50px" height="28px"/>
                             </Link>
                         </div>
                         <ul>
@@ -288,16 +288,16 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                         </ul>
                         <div className="pre_nav-box--btn-groups">
                             <div className="pre_nav_box--search">
-                                <img src="/icon/search.png" width="24px" height="24px"/>
+                                <img src={`${process.env.PUBLIC_URL}/icon/search.png`} width="24px" height="24px"/>
                                 <input placeholder="검색"/>
                             </div>
                             <div className="pre_nav_box--btn_group">
                                 <div className="pre_nav_box--btn_group--wish">
-                                    <img src="/icon/emptyHeart.svg" width="24px" height="24px"/>
+                                    <img src={`${process.env.PUBLIC_URL}/icon/emptyHeart.svg`} width="24px" height="24px"/>
                                 </div>
                                 <div className="pre_nav_box--btn_group--cart">
                                     <Link to="/cart">
-                                        <img src="/icon/cart.png" width="24px" height="24px"/>
+                                        <img src={`${process.env.PUBLIC_URL}/icon/cart.png`} width="24px" height="24px"/>
                                     </Link>
                                 </div>
                             </div>
