@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import GlobalStyles from '../Styles/GlobalStyles';
 import theme from '../Styles/theme';
 import { ThemeProvider } from 'styled-components';
-import {cartProductsVar} from '../Apollo/LocalState'
-import { gql, useQuery} from '@apollo/client';
+import {cartProductsVar, meDataVar} from '../Apollo/LocalState'
+import { gql, useLazyQuery} from '@apollo/client';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
@@ -60,12 +60,17 @@ interface ICartProduct {
   `;
 
 const Routes = () => {
-    const { data: cartData, loading: cartLoading, error: cartError } = useQuery<IGetCardResult>(GET_CART);
+    const [getCart,{ data: cartData, loading: cartLoading, error: cartError }] = useLazyQuery<IGetCardResult>(GET_CART);
 
+    useEffect(() => {
+      if(meDataVar()){
+        getCart()
+      }
+    }, [])
     if (cartLoading) return <Loader/>;
     if (cartError) return <Error error={cartError}/>;
   
-    if(!cartError){
+    if(!cartError && cartData){
       cartProductsVar([...cartData.getCart])
     }
     console.log('getCard data : ', cartData);
