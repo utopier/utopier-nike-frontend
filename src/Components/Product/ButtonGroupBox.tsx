@@ -1,9 +1,9 @@
 import React from 'react';
-import { useMutation, gql, useQuery } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import {cartProductsVar} from '../../Apollo/LocalState'
+import {cartProductsVar, meDataVar} from '../../Apollo/LocalState'
 
 import Loader from '../Shared/Loader'
 import Error from '../Shared/Error'
@@ -41,13 +41,13 @@ const ButtonGroupContainer = styled.div`
     display: flex;
   }
 `;
-const ME = gql`
-  query GetMe {
-    me {
-      id
-    }
-  }
-`;
+// const ME = gql`
+//   query GetMe {
+//     me {
+//       id
+//     }
+//   }
+// `;
 
 const CREACT_PRODUCT_IN_CART = gql`
   mutation createProductInCart($productId: String) {
@@ -68,28 +68,56 @@ const CREACT_PRODUCT_IN_CART = gql`
 `;
 
 const ButtonGroupBox = React.memo(() => {
+  console.log('ButtonGroupBox Component Render');
   const { productId } = useParams<{productId: string}>();
-  const { data: userData, loading: userDataLoading} = useQuery(ME);
+  // const { data: userData, loading: userDataLoading} = useQuery(ME);
   const [cartBtnMutation, { data, loading, error }] = useMutation(CREACT_PRODUCT_IN_CART);
 
-  if(userDataLoading || loading) return <Loader/>
-  if(error) return <Error error={ error}/>
-
+  if( loading) return <Loader/>
+  let errorStatus;
+  if(error){
+    errorStatus = error;
+    console.log(errorStatus);
+    if(localStorage.getItem('token')) {
+      cartBtnMutation({
+        variables: {
+          productId
+        },
+      });
+      console.log('cartMutation refetch...');
+    } else {
+      return <Error error={error}/>;
+    }
+  }
+  console.log('meDataVar : ', meDataVar());
   if(data && data.createProductInCart){
     console.log(data);
     cartProductsVar([...cartProductsVar(),data.createProductInCart])
+    console.log('cartProductsVar() : ', cartProductsVar());
     }
 
   const onClickCartBtn = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     console.log('onClick CartBtn')
     e.preventDefault();
     try {
-      if (userData && userData.me.id) {
+      let exitingProduct;
+      if( cartProductsVar()){
+        exitingProduct = cartProductsVar().find(({product})=>
+          product.id === productId
+        )
+      }
+      if(exitingProduct){
+        alert('이미 추가되었습니다.')
+        return
+      }
+      if (meDataVar() && meDataVar().id || localStorage.getItem("token")) {
         cartBtnMutation({
           variables: {
             productId
           },
         });
+      } else {
+        alert('Login 해야합니다.')
       }
     } catch (e) {
       console.error(e);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useQuery,useLazyQuery, NetworkStatus  } from '@apollo/client';
-import { meDataVar , getProductsVar, productList} from '../Apollo/LocalState'
+import { getProductsVar, productList} from '../Apollo/LocalState'
 
 import ProductCard from '../Components/ProductCard';
 import ProductsHeader from '../Components/ProductsHeader';
@@ -66,37 +66,37 @@ interface IGetProducts {
   getProducts: IProductsPageProduct[];
 }
 
-export const ME = gql`
-  query me {
-    me {
-      id
-      username
-      email
-      likes{
-        id
-        product{
-          id
-        }
-      }
-    }
-  }
-`
+// export const ME = gql`
+//   query me {
+//     me {
+//       id
+//       username
+//       email
+//       likes{
+//         id
+//         product{
+//           id
+//         }
+//       }
+//     }
+//   }
+// `
 
-export interface IMeResult {
-  me: IMeResultObj
-}
+// export interface IMeResult {
+//   me: IMeResultObj
+// }
 
-interface IMeResultObj {
-  id: string;
-  username: string;
-  email: string;
-  likes?: IMeResultObjLike[];
-}
+// interface IMeResultObj {
+//   id: string;
+//   username: string;
+//   email: string;
+//   likes?: IMeResultObjLike[];
+// }
 
-interface IMeResultObjLike{
-  id: string;
-  product:{id: string};
-}
+// interface IMeResultObjLike{
+//   id: string;
+//   product:{id: string};
+// }
 
 let productCount
 
@@ -105,7 +105,7 @@ const Products : React.FC= React.memo(() => {
   // useReactiveVar(getProductsVar)
   const { loading, error, data, refetch, networkStatus } = useQuery<IGetProducts>(GET_PRODUCTS, {variables:{skip:0, take:10}});
   const [getNewProducts, {loading: newProductsLoading, error: newProductsError, data: newProductsData}] = useLazyQuery(GET_PRODUCTS);
-  const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
+  // const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
 
 	React.useEffect(() => {
 		window.addEventListener('scroll',handleScroll)
@@ -115,12 +115,12 @@ const Products : React.FC= React.memo(() => {
 	})
 
   let errorStatus;
-  console.log('meLoading : ', meLoading);
+  // console.log('meLoading : ', meLoading);
   console.log('getProducts Loading : ', loading);
   console.log('newProductsLoading : ',newProductsLoading);
   console.log(networkStatus);
   console.log(networkStatus === NetworkStatus.refetch);
-  if(loading || meLoading) return <Loader/>;
+  if(loading) return <Loader/>;
 
   if(error) {
     errorStatus = error;
@@ -135,22 +135,22 @@ const Products : React.FC= React.memo(() => {
       console.log(networkStatus === NetworkStatus.refetch);
       // return <Loader/>;
     } else {
-      return <Error error={error || meError}/>;
+      return <Error error={error}/>;
     }
   }
 
-  if(meError){
-    errorStatus = meError;
-    console.log(errorStatus);
-    if(localStorage.getItem('token') && !!meDataVar()) {
-      meRefetch();
-      console.log('me refetch...');
-      console.log(networkStatus);
-      console.log(networkStatus === NetworkStatus.refetch);
-    } else {
-      return <Error error={error || meError}/>;
-    }
-  }
+  // if(meError){
+  //   errorStatus = meError;
+  //   console.log(errorStatus);
+  //   if(localStorage.getItem('token') && !!meDataVar()) {
+  //     meRefetch();
+  //     console.log('me refetch...');
+  //     console.log(networkStatus);
+  //     console.log(networkStatus === NetworkStatus.refetch);
+  //   } else {
+  //     return <Error error={error || meError}/>;
+  //   }
+  // }
   
   const handleScroll = () => {
     if(document.documentElement.scrollHeight - (document.documentElement.scrollTop + document.documentElement.clientHeight) <= 280){
@@ -162,10 +162,10 @@ const Products : React.FC= React.memo(() => {
 		}		
    }
 
-   if(meData && meData.me){
-      console.log('meData : ', meData);
-      meDataVar({...meData.me})
-   }
+  //  if(meData && meData.me){
+  //     console.log('meData : ', meData);
+  //     meDataVar({...meData.me})
+  //  }
 
   if (data){
       const getProducts = data.getProducts;
@@ -174,6 +174,8 @@ const Products : React.FC= React.memo(() => {
         productList([...getProducts]) 
       }
   }
+  console.log('newProductsError : ',newProductsError);
+  console.log('newProductsLoading : ',newProductsLoading)
   if(newProductsData){
     productList([...productList(), ...newProductsData.getProducts])
   }

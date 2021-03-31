@@ -258,8 +258,16 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                         <div className="nk_brand--desk_user">
                             <ul>
                                 <li>고객센터</li>
-                                <li><Link to="signup">멤버 가입</Link></li>
-                                <li><Link to="/login">로그인</Link></li>
+                                {isLoggedIn ? (
+                                    <li  onClick={onClickLogout}>
+                                    로그아웃
+                                    </li>
+                                ) : (
+                                    <>
+                                    <li><Link to="/signup">멤버 가입</Link></li>
+                                     <li><Link to="/login"> 로그인 </Link></li>
+                                    </>
+                                )}
                             </ul>
                         </div>
                     </div>

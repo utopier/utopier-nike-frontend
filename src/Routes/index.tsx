@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import GlobalStyles from '../Styles/GlobalStyles';
 import theme from '../Styles/theme';
 import { ThemeProvider } from 'styled-components';
 import {cartProductsVar, meDataVar} from '../Apollo/LocalState'
-import { gql, useLazyQuery} from '@apollo/client';
+import { gql, useQuery} from '@apollo/client';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
@@ -14,7 +14,6 @@ import Login from './Login';
 import Cart from './Cart';
 
 import Error from '../Components/Shared/Error';
-import Loader from '../Components/Shared/Loader'
 
 import AppLayout from '../Components/Layout';
 
@@ -59,22 +58,80 @@ interface ICartProduct {
     }
   `;
 
-const Routes = () => {
-    const [getCart,{ data: cartData, loading: cartLoading, error: cartError }] = useLazyQuery<IGetCardResult>(GET_CART);
-
-    useEffect(() => {
-      if(meDataVar()){
-        getCart()
-      }
-    }, [])
-    if (cartLoading) return <Loader/>;
-    if (cartError) return <Error error={cartError}/>;
   
+export const ME = gql`
+query me {
+  me {
+    id
+    username
+    email
+    likes{
+      id
+      product{
+        id
+      }
+    }
+  }
+}
+`
+
+export interface IMeResult {
+  me: IMeResultObj
+}
+
+interface IMeResultObj {
+  id: string;
+  username: string;
+  email: string;
+  likes?: IMeResultObjLike[];
+}
+
+interface IMeResultObjLike{
+  id: string;
+  product:{id: string};
+}
+
+const Routes = () => {
+    const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
+
+    const { data: cartData, loading: cartLoading, error: cartError , refetch: cartRefetch} = useQuery<IGetCardResult>(GET_CART);
+
+    console.log('meLoading :',meLoading);
+    console.log('cartLoading :', cartLoading);
+  
+    console.log('meError: ', meError);
+    console.log('cartError:',cartError);
+    let errorStatus;
+    if(meError){
+      errorStatus = meError;
+      console.log('meError :',errorStatus);
+      if(localStorage.getItem('token') && errorStatus && !meDataVar()) {
+        meRefetch();
+        console.log('me refetch...');
+      } else {
+        return <Error error={meError}/>;
+      }
+    }
+    if(cartError){
+      errorStatus = cartError;
+      console.log('cartError : ',errorStatus);
+      if((localStorage.getItem('token') && !cartProductsVar()) || (localStorage.getItem('token') && errorStatus)) {
+        cartRefetch();
+        console.log('cart refetch...');
+      } else {
+        return <Error error={cartError}/>;
+      }
+    }
     if(!cartError && cartData){
       cartProductsVar([...cartData.getCart])
     }
     console.log('getCard data : ', cartData);
     console.log('cartProductsVar : ', cartProductsVar());
+
+    if(meData && meData.me){
+      console.log('meData : ', meData);
+      meDataVar({...meData.me})
+   }
     return (
         <ThemeProvider theme={theme}>
             <>

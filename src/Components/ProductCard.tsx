@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import {useMutation,gql} from '@apollo/client'
 import {meDataVar} from '../Apollo/LocalState'
-import {ME,IMeResult} from '../Routes/Products'
+import {ME,IMeResult} from '../Routes'
 import styled from 'styled-components';
 
 const ProductsListWapper = styled.div`
@@ -110,11 +110,15 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
   const onClickHeart = (e) => {
     console.log('onClickHeart')
     e.preventDefault()
-    toggleLikeMutation({
-      variables:{
-        productId: id
-      }
-    })
+    if(localStorage.getItem("token")){
+      toggleLikeMutation({
+        variables:{
+          productId: id
+        }
+      })
+    } else {
+      alert('Login 해야합니다')
+    }
   }
 
   return (

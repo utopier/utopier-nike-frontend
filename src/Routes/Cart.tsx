@@ -110,6 +110,7 @@ const Cart : React.FC = React.memo(() => {
       const newProdutsInCart = cartProductsVar().filter(({id}) => {
         return id !== deletedCartItemId
       })
+      console.log('deletedCartItemId : ',deletedCartItemId);
       cartProductsVar([...newProdutsInCart])
       deletedCartItemId = ''
   }

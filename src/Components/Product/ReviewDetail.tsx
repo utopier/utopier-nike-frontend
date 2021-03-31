@@ -95,7 +95,7 @@ interface IGetCommentsCommentUser {
 const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body, createdAt, username, commentCount ,productId}) => {
   const [clickedCreateCommentBtn, setClickedCreateCommentBtn] = useState(false);
   const [commentBody, onChangeCommentBody,setCommentBody] = useInput('');
-  const { data, loading, error } = useQuery<IGetCommentsResult>(GET_COMMNENTS, { variables: { reviewId } });
+  const { data, loading, error, refetch: commentsRefetch } = useQuery<IGetCommentsResult>(GET_COMMNENTS, { variables: { reviewId } });
   const [createCommentMutation] = useMutation(CREATE_COMMENT,{
     update(cache,{data:{createComment}}){
       const {getComments} = cache.readQuery({query:GET_COMMNENTS,variables:{reviewId}})
@@ -140,8 +140,18 @@ const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body
   };
 
   if (loading) return <Loader/>;
-  if (error) return <Error error={error}/>;
-  
+  let errorStatus;
+    if(error){
+      errorStatus = error;
+      console.log('review error :',errorStatus);
+      if(errorStatus) {
+        commentsRefetch();
+        console.log('review refetch...');
+      } else {
+        return <Error error={error}/>;
+      }
+    }
+
   return (
     <ReviewDetailWrapper>
       <div className="review-title">

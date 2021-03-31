@@ -67,16 +67,27 @@ interface  IGetReviewVar {
 const ReviewContent : React.FC = React.memo(() => {
   const [openCreatedReview, setOpenCreatedReview] = useState(false);
   const { productId } = useParams<{productId: string}>();
-  const { data, loading, error } = useQuery<IGetReviewsResult, IGetReviewVar>(GET_REVIEWS, {
+  const { data, loading, error, refetch: reviewRefetch } = useQuery<IGetReviewsResult, IGetReviewVar>(GET_REVIEWS, {
     variables: {
       productId,
     },
     fetchPolicy:'cache-and-network',
   });
   
+  console.log('review loading : ', loading);
   if (loading) return <Loader/>;
-  if (error) return <Error error={error}/>;
- 
+  let errorStatus;
+    if(error){
+      errorStatus = error;
+      console.log('review error :',errorStatus);
+      if(localStorage.getItem('token') && errorStatus) {
+        reviewRefetch();
+        console.log('review refetch...');
+      } else {
+        return <Error error={error}/>;
+      }
+    }
+
   const openCreateReviewModal = () => {
     setOpenCreatedReview(true);
   };
@@ -85,7 +96,7 @@ const ReviewContent : React.FC = React.memo(() => {
     setOpenCreatedReview(false);
   };
 
-  console.log(data.getReviews)
+  console.log(data && data.getReviews)
 
   return (
     <>
@@ -100,7 +111,7 @@ const ReviewContent : React.FC = React.memo(() => {
         )}
       </CreateReviewBtnWrapper>
       <ReviewListWrapper>
-        {data.getReviews.map((review) => {
+        {data && data.getReviews.map((review) => {
           return (
             <>
               <ReviewCard key={review.id} review={review} productId={productId} />

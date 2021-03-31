@@ -51,8 +51,11 @@ const CREATE_REVIEW = gql`
 `;
 
 const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
-  const [createReviewMutation] = useMutation(CREATE_REVIEW,{
+  const clickedCreate = React.useRef(false);
+  const [createReviewMutation, {error, data}] = useMutation(CREATE_REVIEW,{
     update(cache, {data:{createReview}}){
+      console.log('createReview Result Data : ', data);
+      clickedCreate.current = false;
       const {getReviews} = cache.readQuery({query:GET_REVIEWS,variables:{productId}})
       cache.writeQuery({
         query:GET_REVIEWS,
@@ -75,9 +78,21 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
   const [title, onChangeTitle] = useInput('');
   const [body, onChangeBody] = useInput('');
 
+  console.log(error);
+  if(clickedCreate.current && localStorage.getItem('token')){
+    console.log('create review remutation...')
+    createReviewMutation({
+      variables: {
+        productId: productId + '',
+        title,
+        body,
+      },
+    });
+  }
 
   const onSubmitCreateReview = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    clickedCreate.current = true;
     createReviewMutation({
       variables: {
         productId: productId + '',
@@ -87,6 +102,8 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
     });
     (document.getElementsByClassName('modal-close')[0] as HTMLButtonElement).click()
   };
+
+  
 
   return (
     <CreateReviewFormWrapper>

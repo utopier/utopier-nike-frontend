@@ -95,13 +95,29 @@ interface IGetProductVar {
 const Product :React.FC = () => {
   console.log('Product Page Render')
   const { productId } = useParams<IProductPageParams>();
-  const { data, loading, error } = useQuery<IGetProductResult,IGetProductVar>(GET_PRODUCT, {
+  const { data, loading, error, refetch } = useQuery<IGetProductResult,IGetProductVar>(GET_PRODUCT, {
     variables: { id : productId},
   });
 
+  console.log(loading);
   if(loading) return <Loader/>
-  if(error) return <Error error={error}/>
+  
+  let errorStatus;
+  if(error) {
+    errorStatus = error;
+    console.log(errorStatus);
+    console.log(typeof errorStatus.message);
+    console.log(errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')) ;
+    if (errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
+      refetch();
+      console.log('refetch...');
+      return <Loader/>
+    } else {
+      return <Error error={error}/>;
+    }
+  }
 
+  console.log(data);
   const {title, subtitle, price, imageUrls, descriptionPreview, reviewCount} = data.getProduct
   return (
     <>
