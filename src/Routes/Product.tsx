@@ -108,7 +108,7 @@ const Product :React.FC = () => {
     console.log(errorStatus);
     console.log(typeof errorStatus.message);
     console.log(errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')) ;
-    if (errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
+    if (errorStatus || errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
       refetch();
       console.log('refetch...');
       return <Loader/>
