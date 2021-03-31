@@ -31,6 +31,9 @@ const ProductInfo = styled.div`
   p {
     padding-bottom: 1vw;
   }
+  .like-img{
+    cursor: pointer;
+  }
   @media (max-width: 820px) {
     flex-direction: column;
     font-size: 0.8rem;
@@ -153,9 +156,9 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
                 {meDataVar() && meDataVar().likes && meDataVar().likes.find(v => {
                   return id === v.product.id
                 }) ? (
-                  <img src={`${process.env.PUBLIC_URL}/icon/heart.svg`} width="48px" height="48px"/>
+                  <img className="like-img" src={`${process.env.PUBLIC_URL}/icon/heart.svg`} width="48px" height="48px"/>
                 ) : (
-                  <img src={`${process.env.PUBLIC_URL}/icon/emptyHeart.svg`} width="48px" height="48px"/>
+                  <img className="like-img" src={`${process.env.PUBLIC_URL}/icon/emptyHeart.svg`} width="48px" height="48px"/>
                 )}
               </div>
             </div>  

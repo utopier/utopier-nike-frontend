@@ -75,7 +75,7 @@ export const LOGIN_MUTATION = gql`
 const Login: React.FC = () => {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const [loginMutation, { data }] = useMutation(LOGIN_MUTATION);
+  const [loginMutation, { data, error }] = useMutation(LOGIN_MUTATION);
 
   const history = useHistory();
 
@@ -98,11 +98,15 @@ const Login: React.FC = () => {
     }
   }, [data]);
 
+  if(error){
+    alert(error);
+  }
+
   return (
     <LoginWapper>
       <LoginContainer>
         <LoginHeader>
-          <img src="/image/nikelogo.png" width="50px" height="40px" />
+          <img src={`${process.env.PUBLIC_URL}/image/nikelogo.png`} width="50px" height="40px" />
           <h2>Nike Login</h2>
         </LoginHeader>
         <LoginForm>

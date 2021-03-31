@@ -24,4 +24,7 @@ export default createGlobalStyle`
     button{
       outline:none;
     }
+    button:hover{
+      opacity: 0.8;
+    }
 `;
