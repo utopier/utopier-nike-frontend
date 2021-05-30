@@ -141,7 +141,7 @@ const Routes = () => {
         <ThemeProvider theme={theme}>
             <>
                 <GlobalStyles />
-                    <Router>
+                    <Router basename={"/utopier-nike-frontend"}>
                     <AppLayout>
                         <Switch>
                             <Route exact={true} path="/" component={Home} />
