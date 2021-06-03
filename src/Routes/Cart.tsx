@@ -128,7 +128,7 @@ const Cart : React.FC = React.memo(() => {
     }
   }
 
-  console.log(cartProductsVar())
+  console.log(cartProductsVar());
   return (
     <>
       <CartWrapper>

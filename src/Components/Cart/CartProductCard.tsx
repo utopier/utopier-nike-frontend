@@ -25,20 +25,20 @@ const CartProductCart:React.FC<ICartProductCartProps> = React.memo(({id,product,
         <>
             <div className="cart__body--product-card">
                 <div className="cart__body--product-card--img">
-                      <img src={product.imageUrls[0].url} alt={product.title} width="150px" height="120px" />
+                      <img src={product && product.imageUrls[0].url} alt={product && product.title} width="150px" height="120px" />
                 </div>
                 <div className="cart__body--product-card--info">
                       <div>
-                        <h3>{product.title}</h3>
+                        <h3>{product && product.title}</h3>
                       </div>
                       <div>
-                        <span>{product.subtitle}</span>
+                        <span>{product && product.subtitle}</span>
                       </div>
                       <div>
-                        <span>{product.color}</span>
+                        <span>{product && product.color}</span>
                       </div>
                       <div>
-                        <span>{product.price}</span>
+                        <span>{product && product.price}</span>
                       </div>
                 </div>
                 <div className="cart__body--product-card--delete-btn">

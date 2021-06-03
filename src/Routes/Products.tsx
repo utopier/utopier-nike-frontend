@@ -2,6 +2,8 @@ import React from 'react';
 import { gql, useQuery,useLazyQuery, NetworkStatus  } from '@apollo/client';
 import { getProductsVar, productList} from '../Apollo/LocalState'
 
+import {useLocation} from 'react-router-dom'
+
 import ProductCard from '../Components/ProductCard';
 import ProductsHeader from '../Components/ProductsHeader';
 
@@ -48,6 +50,20 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
+
+export const SEARCH_PRODUCTS = gql`
+  query searchProduct($term: String!){
+    searchProduct(term: $term){
+      id
+      title
+      subtitle
+      price
+      imageUrls{
+        url
+      }
+    }
+  }
+`
 
 interface IProductsPageProduct {
   __typename?: string;
@@ -103,9 +119,16 @@ let productCount
 const Products : React.FC= React.memo(() => {
   console.log('products Component')
   // useReactiveVar(getProductsVar)
+
+  const {search} = useLocation();
+  const query = new URLSearchParams(search);
+  const paramSearchTerm = query.get('searchTerm');
+  console.log('paramSearchTerm : ', paramSearchTerm);
+
   const { loading, error, data, refetch, networkStatus } = useQuery<IGetProducts>(GET_PRODUCTS, {variables:{skip:0, take:10}});
   const [getNewProducts, {loading: newProductsLoading, error: newProductsError, data: newProductsData}] = useLazyQuery(GET_PRODUCTS);
   // const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
+  const [getSearchProducts, {loading: searchProductsLoading, error: searchProductsError, data: searchProductsData}] = useLazyQuery(SEARCH_PRODUCTS);
 
 	React.useEffect(() => {
 		window.addEventListener('scroll',handleScroll)
@@ -114,10 +137,16 @@ const Products : React.FC= React.memo(() => {
 		}
 	})
 
+  React.useEffect(() => {
+    console.log('get searchProducts');
+    getSearchProducts({variables:{term: paramSearchTerm}})
+  },[paramSearchTerm])
+
   let errorStatus;
   // console.log('meLoading : ', meLoading);
   console.log('getProducts Loading : ', loading);
   console.log('newProductsLoading : ',newProductsLoading);
+  console.log('searchProductsLoading : ',searchProductsLoading);
   console.log(networkStatus);
   console.log(networkStatus === NetworkStatus.refetch);
   if(loading) return <Loader/>;
@@ -149,6 +178,10 @@ const Products : React.FC= React.memo(() => {
     }
   }
 
+  if(searchProductsError){
+    console.log('searchProductsError : ', searchProductsError);
+  }
+
   // if(meError){
   //   errorStatus = meError;
   //   console.log(errorStatus);
@@ -164,7 +197,7 @@ const Products : React.FC= React.memo(() => {
   
   const handleScroll = () => {
     if(document.documentElement.scrollHeight - (document.documentElement.scrollTop + document.documentElement.clientHeight) <= 280){
-      if(getProductsVar().skip < productCount){
+      if(getProductsVar().skip < productCount && !paramSearchTerm){
         getProductsVar({...getProductsVar(),skip:productList().length})
         productCount = productCount + 10;
         getNewProducts({variables:getProductsVar()});
@@ -177,13 +210,19 @@ const Products : React.FC= React.memo(() => {
   //     meDataVar({...meData.me})
   //  }
 
-  if (data){
+  if (!searchProductsData && data){
       const getProducts = data.getProducts;
       if(getProductsVar().skip === 0){
         productCount = getProducts.length
         productList([...getProducts]) 
       }
   }
+
+  if(searchProductsData){
+    const getProducts = searchProductsData.searchProduct
+    productList([...getProducts]);
+  }
+
   console.log('newProductsError : ',newProductsError);
   console.log('newProductsLoading : ',newProductsLoading)
   if(newProductsData){

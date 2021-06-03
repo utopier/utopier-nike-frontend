@@ -53,15 +53,18 @@ const CREACT_PRODUCT_IN_CART = gql`
   mutation createProductInCart($productId: String) {
     createProductInCart(productId: $productId){
       id
-      createdAt
-      updatedAt
-      title
-      subtitle
-      price
-      color
-      imageUrls {
+      product{
         id
-        url
+        createdAt
+        updatedAt
+        title
+        subtitle
+        price
+        color
+        imageUrls {
+          id
+          url
+        } 
       }
     }
   }
@@ -91,7 +94,8 @@ const ButtonGroupBox = React.memo(() => {
   }
   console.log('meDataVar : ', meDataVar());
   if(data && data.createProductInCart){
-    console.log(data);
+    console.log(data.createProductInCart.id);
+    console.log(data.createProductInCart.product);
     cartProductsVar([...cartProductsVar(),data.createProductInCart])
     console.log('cartProductsVar() : ', cartProductsVar());
     }
@@ -101,10 +105,12 @@ const ButtonGroupBox = React.memo(() => {
     e.preventDefault();
     try {
       let exitingProduct;
+      console.log(cartProductsVar());
       if( cartProductsVar()){
-        exitingProduct = cartProductsVar().find(({product})=>
-          product.id === productId
-        )
+        exitingProduct = cartProductsVar().find(({product})=>{
+          console.log(product);
+          return product.id === productId
+        })
       }
       if(exitingProduct){
         alert('이미 추가되었습니다.')

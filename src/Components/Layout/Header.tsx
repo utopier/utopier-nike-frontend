@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {useInput} from '../../Hooks/useInput'
 import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
@@ -200,10 +201,12 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
     console.log('header')
     const history = useHistory()
 
+    const [searchTerm, onChangeSearchTerm, setSearchTerm] = useInput('');
+
     const onClickLogout = () => {
         localStorage.removeItem('token');
         // isLoggedInVar(false);
-        history.push('/');
+        history.push('/products');
       };
     
 
@@ -246,6 +249,24 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
         mobileSearchEl.classList.remove('open');
         mobileSearchEl.style.width = '0';
       };
+
+
+      const onKeyPressSearch = (e) => {
+        console.log('onKeyPressSearch');
+        console.log(searchTerm);
+        console.log(e);
+        console.log(e.keyCode === 13);
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            e.nativeEvent.stopImmediatePropagation();
+    
+            const mobileSearchEl = document.getElementById('mobile-search');
+            mobileSearchEl.classList.remove('open');
+            mobileSearchEl.style.width = '0';
+            setSearchTerm('');
+            history.push(`/products?searchTerm=${searchTerm}`);
+        }
+    }
     
     return (
         <>
@@ -289,7 +310,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                         <div className="pre_nav-box--btn-groups">
                             <div className="pre_nav_box--search">
                                 <img src={`${process.env.PUBLIC_URL}/icon/search.png`} width="24px" height="24px"/>
-                                <input placeholder="검색"/>
+                                <input placeholder="검색" value={searchTerm} onChange={onChangeSearchTerm} onKeyPress={onKeyPressSearch}/>
                             </div>
                             <div className="pre_nav_box--btn_group">
                                 <div className="pre_nav_box--btn_group--wish">
@@ -316,8 +337,8 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                     </div>
                     <div className="responsive-header__icons">
                         <div className="search-bar" onClick={onClickSearchIcon}>
-                        <img src={`${process.env.PUBLIC_URL}/icon/search.png`} width="25px" height="25px" />
-                        <input type="text" placeholder="검색" />
+                            <img src={`${process.env.PUBLIC_URL}/icon/search.png`} width="25px" height="25px" />
+                            <input type="text" placeholder="검색" value={searchTerm} onChange={onChangeSearchTerm} onKeyPress={onKeyPressSearch}/>
                         </div>
                         <div>
                         <Link to="/cart">
@@ -389,7 +410,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                 <div className="mobile-search__bar">
                 <form>
                     <label htmlFor="mobile-search-input">
-                    <input id="mobile-search-input" type="text" placeholder="검색" />
+                    <input id="mobile-search-input" type="text" placeholder="검색" value={searchTerm} onChange={onChangeSearchTerm} onKeyPress={onKeyPressSearch}/>
                     </label>
                 </form>
                 <button type="button" onClick={onClickCloseMobileSearch}>

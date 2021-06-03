@@ -146,8 +146,8 @@ const Routes = () => {
                         <Switch>
                             <Route exact={true} path="/" component={Home} />
                             <Route path="/products" component={Products} />
-                            <Route path="/product/:productId" component={Product} />
                             <Route path="/cart" component={Cart} />
+                            <Route path="/product/:productId" component={Product} />
                             <Route path="/login" component={Login} />
                             <Route path="/signup" component={SignUp} />
                             <Redirect from="*" to="/" />

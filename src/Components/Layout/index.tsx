@@ -21,7 +21,7 @@ interface IIsLoggedInData {
   }
 
 const AppLayout = ({children}) => {
-   console.log('AppLayout')
+    console.log('AppLayout')
     const { data, loading, error } = useQuery<IIsLoggedInData>(IS_LOGGED_IN);
   
     if (loading) return <Loader/>;
