@@ -46,13 +46,6 @@ const httpLink = new HttpLink({
   ? 'http://localhost:4000/graphql'
   : 'https://utopier-nike-backend.herokuapp.com/graphql',
   //  uri: 'http://localhost:4000/graphql',
-  fetchOptions:{
-    mode:'no-cors'
-  },
-  headers:{
-      'Content-Type': `application/json`,
-      'Accept'      : `application/json`
-  }
 })
 
 const authLink = setContext((_, { headers }) => {
