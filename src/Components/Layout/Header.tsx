@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {isLoggedInVar} from '../../Apollo/LocalState'
 import {useInput} from '../../Hooks/useInput'
 import { Link, useHistory } from 'react-router-dom';
 
@@ -205,7 +206,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
 
     const onClickLogout = () => {
         localStorage.removeItem('token');
-        // isLoggedInVar(false);
+        isLoggedInVar(false);
         history.push('/products');
       };
     
