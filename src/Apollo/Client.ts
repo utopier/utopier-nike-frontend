@@ -43,9 +43,9 @@ export const cache : InMemoryCache = new InMemoryCache({
 
 const httpLink = new HttpLink({
   uri:  process.env.NODE_ENV === 'development'
-  ? 'http://localhost:4000/graphql'
-  : 'https://utopier-nike-backend.herokuapp.com/graphql',
-  //  uri: 'http://localhost:4000/graphql',
+  ? 'http://localhost:4000'
+  : 'https://utopier-nike-backend.herokuapp.com',
+  //  uri: 'http://localhost:4000',
 })
 
 const authLink = setContext((_, { headers }) => {
