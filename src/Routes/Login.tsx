@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useRef } from 'react';
 import { useInput } from '../Hooks/useInput';
 import { gql, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
@@ -76,12 +76,14 @@ const Login: React.FC = () => {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [loginMutation, { data, error }] = useMutation(LOGIN_MUTATION);
+  const confirmError = useRef(false);
 
   const history = useHistory();
 
   const onSubmitLoginForm = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      confirmError.current = false;
       loginMutation({
         variables: { email, password },
       });
@@ -98,8 +100,9 @@ const Login: React.FC = () => {
     }
   }, [data]);
 
-  if(error){
-    alert(error);
+  if(error && !confirmError.current){
+    confirm(error.message);
+    confirmError.current = true;
   }
 
   return (
