@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 const LoaderContainer = styled.div`
     width: 100%;
@@ -7,17 +9,24 @@ const LoaderContainer = styled.div`
     div{
         padding: 100px;
     }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
-const Loader = () => {
+const LoaderComponent = () => {
     console.log('Loader Component');
     return(
         <LoaderContainer>
-            <div>
-                <h3>...Loading</h3>
-            </div>
+            <Loader
+                type="TailSpin"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={3000}
+            />
         </LoaderContainer>
     )
 }
 
-export default Loader;
+export default LoaderComponent;
