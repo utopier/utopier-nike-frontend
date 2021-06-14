@@ -6,7 +6,7 @@ import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
 import {GET_COMMNENTS, IGetCommentsResult} from './ReviewDetail'
 
 import Loader from '../Shared/Loader';
-import Error from '../Shared/Error';
+// import Error from '../Shared/Error';
 
 const ME = gql`
   query me {
@@ -87,7 +87,7 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
     }
   })
 
-  const [updateCommentMutation, { data: updateCommentData }] = useMutation(UPDATE_COMMENT, {
+  const [updateCommentMutation, { data: updateCommentData, error: updateCommentError }] = useMutation(UPDATE_COMMENT, {
     update(cache, {data:{updateComment}}){
       const {getComments} = cache.readQuery({query:GET_COMMNENTS,variables:{reviewId}})
       cache.writeQuery({
@@ -102,8 +102,13 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
   });
 
   if (loading) return <Loader/>;
+  if(updateCommentError) {
+    alert(updateCommentError)
+  }
   
-  if (error) return <Error error={error}/>;
+  if (error) {
+    console.log('me error : ', error);
+  }
 
   const onClickUpdateComment = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -135,18 +140,19 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
     console.log(updateCommentData);
   };
 
+
   return (
     <>
       <div className="comment-user">
         <span>
           {comment.user.username} - {comment.createdAt}
         </span>
-        {comment.user.id === data.me.id && (
+        {data && data.me && comment.user.id === data.me.id ? (
           <div>
             <button onClick={onClickUpdateComment}>수정</button>
             <button onClick={onClickDeleteComment}>삭제</button>
           </div>
-        )}
+        ): null}
       </div>
       <div className="comment-text">
         {clickedUpdateComment ? (

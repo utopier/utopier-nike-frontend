@@ -40,6 +40,16 @@ export const GET_REVIEWS = gql`
   }
 `;
 
+const ME = gql`
+  query me {
+    me {
+      id
+      username
+    }
+  }
+`;
+
+
 export interface IGetReviewsResult {
   getReviews: IGetReviewContent[]
 }
@@ -65,8 +75,10 @@ interface  IGetReviewVar {
 
 
 const ReviewContent : React.FC = React.memo(() => {
+  const [openedErrorModal, setOpenedErrorModal] = useState(false);
   const [openCreatedReview, setOpenCreatedReview] = useState(false);
   const { productId } = useParams<{productId: string}>();
+  const { data: meData } = useQuery(ME);
   const { data, loading, error, refetch: reviewRefetch } = useQuery<IGetReviewsResult, IGetReviewVar>(GET_REVIEWS, {
     variables: {
       productId,
@@ -78,6 +90,7 @@ const ReviewContent : React.FC = React.memo(() => {
   if (loading) return <Loader/>;
   let errorStatus;
     if(error){
+      console.log(error);
       errorStatus = error;
       console.log('review error :',errorStatus);
       if(localStorage.getItem('token') && errorStatus) {
@@ -89,7 +102,11 @@ const ReviewContent : React.FC = React.memo(() => {
     }
 
   const openCreateReviewModal = () => {
-    setOpenCreatedReview(true);
+    if(meData){
+      setOpenCreatedReview(true);
+    } else {
+      setOpenedErrorModal(true);
+    }
   };
 
   const closeCreateReviewModal = () => {
@@ -97,6 +114,9 @@ const ReviewContent : React.FC = React.memo(() => {
   };
 
   console.log(data && data.getReviews)
+  const closeErrorModal = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setOpenedErrorModal(false);
+  };
 
   return (
     <>
@@ -104,6 +124,11 @@ const ReviewContent : React.FC = React.memo(() => {
         <button className="review-create-btn" onClick={openCreateReviewModal}>
           리뷰 작성하기
         </button>
+        {openedErrorModal && (
+              <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
+                <div>{error}</div>
+              </Error>)
+            }
         {openCreatedReview && (
           <Modal visible={openCreatedReview} closable={true} maskClosable={true} onClose={closeCreateReviewModal}>
             <CreateReviewForm productId={productId} />

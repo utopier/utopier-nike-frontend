@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -74,6 +74,7 @@ const ButtonGroupBox = React.memo(() => {
   console.log('ButtonGroupBox Component Render');
   const { productId } = useParams<{productId: string}>();
   // const { data: userData, loading: userDataLoading} = useQuery(ME);
+  const [openedErrorModal, setOpenedErrorModal] = useState(false);
   const [cartBtnMutation, { data, loading, error }] = useMutation(CREACT_PRODUCT_IN_CART);
 
   if( loading) return <Loader/>
@@ -100,6 +101,10 @@ const ButtonGroupBox = React.memo(() => {
     console.log('cartProductsVar() : ', cartProductsVar());
     }
 
+    const closeErrorModal = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setOpenedErrorModal(false);
+    };
+
   const onClickCartBtn = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     console.log('onClick CartBtn')
     e.preventDefault();
@@ -123,7 +128,7 @@ const ButtonGroupBox = React.memo(() => {
           },
         });
       } else {
-        alert('Login 해야합니다.')
+        setOpenedErrorModal(true);
       }
     } catch (e) {
       console.error(e);
@@ -139,7 +144,13 @@ const ButtonGroupBox = React.memo(() => {
           <button onClick={onClickCartBtn}>장바구니</button>
           <button>위시리스트 ♡</button>
         </div>
+        
       </ButtonGroupContainer>
+      {openedErrorModal && (
+              <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
+                <div>{error}</div>
+              </Error>)
+            }
     </>
   );
 });

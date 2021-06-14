@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+
+import Error from '../Components/Shared/Error'
 
 import {useMutation,gql} from '@apollo/client'
 import {meDataVar} from '../Apollo/LocalState'
@@ -69,6 +71,7 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
   // const liked = meDataVar().likes.find(v => id === v.product.id)
   // const client = useApolloClient()
   // const liked = client.cache.readQuery<IMeResult>({query:ME}).me.likes.find(v => id === v.product.id)
+  const [openedErrorModal, setOpenedErrorModal] = useState(false);
   const [toggleLikeMutation,{loading, error}] = useMutation(TOGGLE_LIKE,{
     update(cache,{data:{toggleLike}}:any){
       console.log('update me cache')
@@ -107,7 +110,9 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
       }
     }
   })
-  
+  const closeErrorModal = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setOpenedErrorModal(false);
+  };
   console.log('toggleMutation Loading : ', loading);
   console.log('toggleMutation error : ', error);
   const onClickHeart = (e) => {
@@ -120,7 +125,7 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
         }
       })
     } else {
-      alert('Login 해야합니다')
+      setOpenedErrorModal(true);
     }
   }
 
@@ -162,6 +167,11 @@ const ProductCard : React.FC<IProductCardProps> = ({id, imageUrls, title, subtit
                 )}
               </div>
             </div>  
+            {openedErrorModal && (
+              <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
+                <div>{error}</div>
+              </Error>)
+            }
         </ProductInfo>
       </ProductsListWapper>
     </>

@@ -11,7 +11,7 @@ import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
 import {GET_PRODUCT} from '../../Routes/Product'
 
 import Loader from '../Shared/Loader';
-import Error from '../Shared/Error';
+// import Error from '../Shared/Error';
 
 const ReviewCardWrapper = styled.div`
   div {
@@ -107,7 +107,9 @@ const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
   }});
 
   if (loading) return <Loader/>;
-  if (error) return <Error error={error}/>;
+  if (error) {
+    console.log('me error : ', error);
+  };
 
   const openReviewDetail = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOpenedReviewDetail(true);
@@ -142,7 +144,7 @@ const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
     <ReviewCardWrapper>
       <div className="review-title">
         <span>{title}</span>
-        {user.id === data.me.id && (
+        {data && data.me && user.id === data.me.id ? (
           <div>
             <button onClick={onClickUpdateReviewBtn}>수정</button>
             <button onClick={onClickDeleteReviewBtn}>삭제</button>
@@ -152,7 +154,7 @@ const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
               </Modal>
             )}
           </div>
-        )}
+        ): null}
       </div>
       <div className="review-user">
         <span>{user.username} - </span>

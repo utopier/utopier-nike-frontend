@@ -52,7 +52,7 @@ const CREATE_REVIEW = gql`
 
 const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
   const clickedCreate = React.useRef(false);
-  const [createReviewMutation, {error, data}] = useMutation(CREATE_REVIEW,{
+  const [createReviewMutation, { data}] = useMutation(CREATE_REVIEW,{
     update(cache, {data:{createReview}}){
       console.log('createReview Result Data : ', data);
       clickedCreate.current = false;
@@ -78,7 +78,6 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
   const [title, onChangeTitle] = useInput('');
   const [body, onChangeBody] = useInput('');
 
-  console.log(error);
   if(clickedCreate.current && localStorage.getItem('token')){
     console.log('create review remutation...')
     createReviewMutation({

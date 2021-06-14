@@ -94,9 +94,10 @@ interface IGetCommentsCommentUser {
 
 const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body, createdAt, username, commentCount ,productId}) => {
   const [clickedCreateCommentBtn, setClickedCreateCommentBtn] = useState(false);
+  const [openedErrorModal, setOpenedErrorModal] = useState(false);
   const [commentBody, onChangeCommentBody,setCommentBody] = useInput('');
   const { data, loading, error, refetch: commentsRefetch } = useQuery<IGetCommentsResult>(GET_COMMNENTS, { variables: { reviewId } });
-  const [createCommentMutation] = useMutation(CREATE_COMMENT,{
+  const [createCommentMutation, {error: CreateCommentError}] = useMutation(CREATE_COMMENT,{
     update(cache,{data:{createComment}}){
       const {getComments} = cache.readQuery({query:GET_COMMNENTS,variables:{reviewId}})
       cache.writeQuery({
@@ -120,8 +121,11 @@ const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body
   const onClickCreateCommentBtn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
-
-    setClickedCreateCommentBtn(!clickedCreateCommentBtn);
+    if(localStorage.getItem('token')){
+      setClickedCreateCommentBtn(!clickedCreateCommentBtn);
+    } else {
+      setOpenedErrorModal(true);
+    }
   };
 
   const onSubmitCreateComment = (e: React.FormEvent<HTMLFormElement>) => {
@@ -151,6 +155,14 @@ const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body
         return <Error error={error}/>;
       }
     }
+    if(CreateCommentError){
+      console.log(CreateCommentError);
+    }
+
+    const closeErrorModal = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setOpenedErrorModal(false);
+    };
+  
 
   return (
     <ReviewDetailWrapper>
@@ -189,6 +201,11 @@ const ReviewDetail : React.FC<IReivewDetailProps> = ({ id: reviewId, title, body
             );
           })}
       </div>
+      {openedErrorModal && (
+              <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
+                <div>{error}</div>
+              </Error>)
+        }
     </ReviewDetailWrapper>
   );
 };
