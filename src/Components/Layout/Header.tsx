@@ -10,6 +10,13 @@ const HeaderContainer = styled.header`
     width: 100%;
     height: 96px;
     z-index: 1;
+    .nk_brand--desk_user {
+        ul{
+            li {
+                cursor: pointer;
+            }
+        }
+    }
     .responsive-header {
       display: none;
     }

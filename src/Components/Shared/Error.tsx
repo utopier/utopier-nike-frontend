@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styled from 'styled-components';
 
 interface IModalOverlayStyledProps {
@@ -44,7 +44,8 @@ const ModalInner = styled.div`
   margin: 0 auto;
   padding: 20px 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
   .modal-close {
     background-color: black;
     color: white;
@@ -67,6 +68,25 @@ interface IErrorModalProps {
 
 
 const Error : React.FC<IErrorModalProps> = ({ error,className, visible, children, maskClosable, closable, onClose }) => {
+  const closeBtnRef = useRef(null); 
+  // const [keyPressedEscape, setKeyPressedEscape] = useState(false)
+
+  useEffect(() => {
+    // setKeyPressedEscape(false);
+  
+    // X Button Focus : Enter시 닫힘
+    closeBtnRef.current.focus();
+  
+    // ESC KeyDown시 닫힘.
+    // document.addEventListener('keydown',keyPressEscape)
+  },[]);
+  
+  // const keyPressEscape = (e) => {
+  //   if(e.key === 'Escape'){
+  //     setKeyPressedEscape(true);
+  //   }
+  // }
+
   const onMaskClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {
       onClose(e);
@@ -79,18 +99,19 @@ const Error : React.FC<IErrorModalProps> = ({ error,className, visible, children
     }
   };
   console.log('ErrorModal Rendering')
-
+  // console.log('keyPressedEscape : ', keyPressedEscape);
+  console.log('visible : ',visible);
   return (
     <>
       <ModalOverlay visible={visible}>
         <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex={-1} visible={visible}>
           <ModalInner tabIndex={0} className="modal-inner">
+            <div style={{paddingTop: '7px', color: 'black'}}>{error || 'Login 하셔야 합니다.'}</div>
             {closable && (
-              <button className="modal-close" onClick={close}>
+              <button ref={closeBtnRef} className="modal-close" onClick={close}>
                 X
               </button>
             )}
-            <div>{error || 'Login 하셔야 합니다.'}</div>
           </ModalInner>
         </ModalWrapper>
       </ModalOverlay>
