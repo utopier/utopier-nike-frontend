@@ -14,20 +14,27 @@ import Loader from '../Shared/Loader';
 // import Error from '../Shared/Error';
 
 const ReviewCardWrapper = styled.div`
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
   div {
     padding-top: 10px;
   }
   .review-title {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     font-size: 1rem;
     font-weight: 700;
   }
   .review-user {
+    display:flex;
+    justify-content: flex-end;
     color: #828282;
   }
   .review-body {
     padding-left: 10px;
+    margin-bottom: 10px;
     font-size: 1rem;
   }
   .review-comments {

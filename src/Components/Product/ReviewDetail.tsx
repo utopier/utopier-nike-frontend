@@ -24,7 +24,6 @@ const ReviewDetailWrapper = styled.div`
   }
   .review-comments-wrapper {
     border-top: 1px solid #e5e5e5;
-    padding-left: 20px;
   }
   .comment-user {
     font-size: 0.9rem;
@@ -33,7 +32,8 @@ const ReviewDetailWrapper = styled.div`
   .comment-text {
     padding-left: 10px;
     font-size: 1rem;
-    font-weight: 600;
+    border-bottom: 1px solid rgb(229, 229, 229);
+    padding-bottom: 5px;  
   }
 `;
 

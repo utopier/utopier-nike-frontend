@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import {cartProductsVar, meDataVar} from '../Apollo/LocalState'
 import { gql, useQuery} from '@apollo/client';
 
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter as Router , Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
 import Products from './Products';
 import Product from './Product';

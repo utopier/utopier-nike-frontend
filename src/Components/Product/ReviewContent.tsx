@@ -128,7 +128,7 @@ const ReviewContent : React.FC = React.memo(() => {
               <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
                 <div>{error}</div>
               </Error>)
-            }
+        }
         {openCreatedReview && (
           <Modal visible={openCreatedReview} closable={true} maskClosable={true} onClose={closeCreateReviewModal}>
             <CreateReviewForm productId={productId} />
