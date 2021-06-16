@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 interface ICartProductCartProps {
     id: string;
     product: ICartProduct;
     onClickDeleteBtn: (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
+};
 
 interface ICartProduct {
     id: string;
@@ -13,11 +13,11 @@ interface ICartProduct {
     price: string;
     color: string;
     imageUrls: ICartProductImgUrls[];
-  }
+};
     
-  interface ICartProductImgUrls{
+interface ICartProductImgUrls{
     url: string;
-  }
+};
 
 const CartProductCart:React.FC<ICartProductCartProps> = React.memo(({id,product,onClickDeleteBtn}) => {
     console.log(product);
@@ -48,7 +48,7 @@ const CartProductCart:React.FC<ICartProductCartProps> = React.memo(({id,product,
                 </div>
             </div>
         </>
-    )
-})
+    );
+});
 
 export default CartProductCart;

@@ -5,9 +5,6 @@ import { useInput } from '../../Hooks/useInput';
 import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
 import {GET_COMMNENTS, IGetCommentsResult} from './ReviewDetail'
 
-import Loader from '../Shared/Loader';
-// import Error from '../Shared/Error';
-
 const ME = gql`
   query me {
     me {
@@ -56,7 +53,7 @@ interface ICommentCardPropsComment {
 const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewId }) => {
   const [clickedUpdateComment, setClickedUpdateComment] = useState(false);
   const [updateCommentText, onChnageUpdateCommentText] = useInput(comment.text);
-  const { data, loading, error } = useQuery(ME);
+  const { data, error } = useQuery(ME);
   const [deleteCommentMutation, { data: deleteCommentData }] = useMutation(DELETE_COMMENT,{
     update(cache, {data:{deleteComment}}){
       if(deleteComment){
@@ -101,7 +98,6 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
     }
   });
 
-  if (loading) return <Loader/>;
   if(updateCommentError) {
     alert(updateCommentError)
   }

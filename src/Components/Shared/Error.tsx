@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 interface IModalOverlayStyledProps {
-  visible: boolean
-}
+  visible: boolean;
+};
 
 const ModalOverlay = styled.div<IModalOverlayStyledProps>`
   box-sizing: border-box;
@@ -65,7 +65,7 @@ interface IErrorModalProps {
   closable?: boolean;
   onClose?: (e:React.MouseEvent<HTMLDivElement, MouseEvent> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   error?: object;
-}
+};
 
 
 const Error : React.FC<IErrorModalProps> = ({ error,className, visible, children, maskClosable, closable, onClose }) => {
@@ -108,10 +108,10 @@ const Error : React.FC<IErrorModalProps> = ({ error,className, visible, children
         <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex={-1} visible={visible}>
           <ModalInner tabIndex={0} className="modal-inner">
             <div style={{paddingTop: '7px', color: 'black'}}>{error || 'Login 하셔야 합니다.'}</div>
-            <div style={{paddingTop: '7px'}}>
+            {!error && <div style={{paddingTop: '7px'}}>
              <Link to='/login'>로그인 | </Link> 
              <Link to='/signup'>회원가입</Link>
-            </div>
+            </div>}
             {closable && (
               <button ref={closeBtnRef} className="modal-close" onClick={close}>
                 X

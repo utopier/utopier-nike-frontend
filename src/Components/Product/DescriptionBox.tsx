@@ -1,5 +1,4 @@
 import React from "react";
-
 import styled from "styled-components";
 
 const DescriptionContainer = styled.div`
@@ -27,8 +26,8 @@ const DescriptionContainer = styled.div`
 `;
 
 interface IDescriptionBoxProps {
-  title: string;
-  body: string;
+    title: string;
+    body: string;
 }
 
 const DescriptionBox : React.FC<IDescriptionBoxProps>= React.memo(({ title, body }) => {

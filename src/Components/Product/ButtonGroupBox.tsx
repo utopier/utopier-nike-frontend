@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {cartProductsVar, meDataVar} from '../../Apollo/LocalState'
-
 import Loader from '../Shared/Loader'
 import Error from '../Shared/Error'
 

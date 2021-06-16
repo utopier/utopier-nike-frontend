@@ -7,37 +7,37 @@ interface ICartProduct {
     price: string;
     color: string;
     imageUrls: ICartProductImgUrls[];
-  }
+}
   
-  interface ICartProductImgUrls{
+interface ICartProductImgUrls{
     url: string;
-  }
+};
   
-  interface ICartProducts {
+interface ICartProducts {
     id: string;
     product:ICartProduct;
-  }
+};
   
-  const initGetTodosVar = {
+const initGetTodosVar = {
     filter: "",
     orderBy: {},
     skip: 0,
     take: 10
-  }
+};
 
-  interface IMeDataVar {
+interface IMeDataVar {
     __typename?: string;
     id?: string;
     username?: string;
     email?: string;
     likes?: IMeDataVarLike[]
-  }
+};
 
-  interface IMeDataVarLike {
+interface IMeDataVarLike {
     __typename?: string;
     id: string;
     product:{id: string};
-  }
+};
 
 export const isLoggedInVar = makeVar(!!localStorage.getItem('token'));
 export const meDataVar = makeVar<IMeDataVar | undefined>(undefined);

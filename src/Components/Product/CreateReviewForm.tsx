@@ -1,7 +1,8 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useInput } from '../../Hooks/useInput';
 import styled from 'styled-components';
+
+import { useInput } from '../../Hooks/useInput';
 import {GET_REVIEWS} from './ReviewContent'
 import {GET_PRODUCT} from '../../Routes/Product'
 
@@ -122,6 +123,6 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
       </div>
     </CreateReviewFormWrapper>
   );
-})
+});
 
 export default CreateReviewForm;

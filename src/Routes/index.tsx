@@ -1,21 +1,19 @@
 import React from 'react';
+import { gql, useQuery} from '@apollo/client';
+import { HashRouter as Router , Route, Switch, Redirect } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
 import GlobalStyles from '../Styles/GlobalStyles';
 import theme from '../Styles/theme';
-import { ThemeProvider } from 'styled-components';
 import {cartProductsVar, meDataVar} from '../Apollo/LocalState'
-import { gql, useQuery} from '@apollo/client';
-
-import { HashRouter as Router , Route, Switch, Redirect } from 'react-router-dom';
 import Home from './Home';
 import Products from './Products';
 import Product from './Product';
 import SignUp from './SignUp';
 import Login from './Login';
 import Cart from './Cart';
-
-import Error from '../Components/Shared/Error';
-
 import AppLayout from '../Components/Layout';
+import Error from '../Components/Shared/Error';
 
 interface ICartProduct {
     id: string;
@@ -24,76 +22,75 @@ interface ICartProduct {
     price: string;
     color: string;
     imageUrls: ICartProductImgUrls[];
-  }
+}
   
-  interface ICartProductImgUrls{
+interface ICartProductImgUrls{
     url: string;
-  }
+}
   
-  interface ICartProducts {
+interface ICartProducts {
     id: string;
     product:ICartProduct;
-  }
+}
   
-  interface IGetCardResult {
+interface IGetCardResult {
     getCart: ICartProducts[]
-  }
+}
   
   
-  const GET_CART = gql`
+const GET_CART = gql`
     query GetCart {
-      getCart {
-        id
-        product {
-          id
-          title
-          subtitle
-          price
-          color
-          imageUrls {
-            url
-          }
+        getCart {
+            id
+            product {
+                id
+                title
+                subtitle
+                price
+                color
+                imageUrls {
+                  url
+                }
+            }
         }
-      }
     }
-  `;
+`;
 
   
 export const ME = gql`
-query me {
-  me {
-    id
-    username
-    email
-    likes{
-      id
-      product{
+    query me {
+      me {
         id
-      }
+        username
+        email
+        likes {
+            id
+            product{
+                id
+            }
+        }
     }
-  }
 }
 `
 
 export interface IMeResult {
-  me: IMeResultObj
+    me: IMeResultObj
 }
 
 interface IMeResultObj {
-  id: string;
-  username: string;
-  email: string;
-  likes?: IMeResultObjLike[];
+    id: string;
+    username: string;
+    email: string;
+    likes?: IMeResultObjLike[];
 }
 
 interface IMeResultObjLike{
-  id: string;
-  product:{id: string};
+    id: string;
+    product: { id: string };
 }
 
 const Routes = () => {
     const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
-
     const { data: cartData, loading: cartLoading, error: cartError , refetch: cartRefetch} = useQuery<IGetCardResult>(GET_CART);
 
     console.log('meLoading :',meLoading);
@@ -114,7 +111,7 @@ const Routes = () => {
       else {
         return <Error error={meError}/>;
       }
-    }
+    };
     if(cartError){
       errorStatus = cartError;
       console.log('cartError : ',errorStatus);
@@ -126,37 +123,36 @@ const Routes = () => {
       }  else {
         return <Error error={cartError}/>;
       }
-    }
+    };
     if(!cartError && cartData){
       cartProductsVar([...cartData.getCart])
-    }
+    };
     console.log('getCard data : ', cartData);
     console.log('cartProductsVar : ', cartProductsVar());
 
     if(meData && meData.me){
       console.log('meData : ', meData);
       meDataVar({...meData.me})
-   }
+   };
+   
     return (
         <ThemeProvider theme={theme}>
-            <>
-                <GlobalStyles />
-                    <Router>
-                    <AppLayout>
-                        <Switch>
-                            <Route exact={true} path="/" component={Home} />
-                            <Route path="/products" component={Products} />
-                            <Route path="/cart" component={Cart} />
-                            <Route path="/product/:productId" component={Product} />
-                            <Route path="/login" component={Login} />
-                            <Route path="/signup" component={SignUp} />
-                            <Redirect from="*" to="/" />
-                        </Switch>
-                        </AppLayout>
-                    </Router>
-            </>
+            <GlobalStyles />
+            <Router>
+                <AppLayout>
+                    <Switch>
+                        <Route exact={true} path="/" component={Home} />
+                        <Route path="/products" component={Products} />
+                        <Route path="/cart" component={Cart} />
+                        <Route path="/product/:productId" component={Product} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/signup" component={SignUp} />
+                        <Redirect from="*" to="/" />
+                    </Switch>
+                </AppLayout>
+            </Router>
         </ThemeProvider>
-    )
-}
+    );
+};
 
 export default Routes;

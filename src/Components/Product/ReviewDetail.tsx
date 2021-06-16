@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { useInput } from '../../Hooks/useInput';
-import styled from 'styled-components';
 import CommentCard from './CommentCard';
-
 import {GET_REVIEWS} from './ReviewContent'
-
 import Loader from '../Shared/Loader'
 import Error from '../Shared/Error'
 

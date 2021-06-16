@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 
 import {cartProductsVar} from '../Apollo/LocalState'
-
 import CartProductCart from '../Components/Cart/CartProductCard'
 import Loader from '../Components/Shared/Loader';
 import Error from '../Components/Shared/Error';

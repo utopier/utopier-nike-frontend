@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import Modal from '../Shared/Modal';
 import styled from 'styled-components';
-
-import ReviewDetail from './ReviewDetail';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import UpdateReviewForm from './UpdateReviewForm';
-
 
 import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
 import {GET_PRODUCT} from '../../Routes/Product'
-
+import Modal from '../Shared/Modal';
+import ReviewDetail from './ReviewDetail';
+import UpdateReviewForm from './UpdateReviewForm';
 import Loader from '../Shared/Loader';
 // import Error from '../Shared/Error';
 

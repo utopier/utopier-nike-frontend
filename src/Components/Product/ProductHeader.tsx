@@ -1,5 +1,4 @@
 import React from "react";
-
 import styled from "styled-components";
 
 const ProductHeaderContainer = styled.div`
@@ -22,7 +21,7 @@ interface IProductHeaderProps {
   title: string;
   subtitle: string;
   price: string;
-}
+};
 
 const ProductHeader : React.FC<IProductHeaderProps>= React.memo((props) => {
   const { title, subtitle, price } = props;

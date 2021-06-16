@@ -2,11 +2,11 @@ import React from "react";
 
 interface IOptionListProps {
   optionImgUrls: IOptionListPropsOpt[]
-}
+};
 
 interface IOptionListPropsOpt {
   optionColorImgUrl: string;
-}
+};
 
 const OptionList : React.FC<IOptionListProps> = React.memo(({ optionImgUrls }) => {
   return (

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
 
 import {isLoggedInVar} from '../../Apollo/LocalState'
 import {useInput} from '../../Hooks/useInput'
-import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
     position: fixed;
@@ -11,7 +11,7 @@ const HeaderContainer = styled.header`
     height: 96px;
     z-index: 1;
     .nk_brand--desk_user {
-        ul{
+        ul {
             li {
                 cursor: pointer;
             }
@@ -53,33 +53,33 @@ const HeaderContainer = styled.header`
         height: 60px;
         padding: 10px 38px;
         background-color: white;
-        .pre_nav_box{
+        .pre_nav_box {
             display: flex;
             justify-content: space-between;
-            ul{
+            ul {
                 display: flex;
                 width: 500px;
                 justify-content: center;
-                li{
+                li {
                     padding: 10px;
                     font-size: 16px;
                     font-weight: 500;
                     line-height: 2;
                 }
             }
-            .pre_nav-box--btn-groups{
+            .pre_nav-box--btn-groups {
                 display: flex;
                 justify-content: space-between;
                 width: 300px;
-                .pre_nav_box--search{
+                .pre_nav_box--search {
                     position:relative;
                     top: 10px;
-                    img{
+                    img {
                         position:absolute;
                         top: 5px;
                         left: 5px;
                     }
-                    input{
+                    input {
                         width: 180px;
                         background: #f5f5f5;
                         border-radius: 100px;
@@ -106,104 +106,103 @@ const ResponsiveHeader = styled.header`
     padding: 10px 10px 0;
     background-color: white;
     .responsive-header__icons {
-    display: flex;
-    div {
-        padding: 0 5px;
-    }
-    .search-bar {
-        cursor: pointer;
-        input {
-        display: none;
+        display: flex;
+        div {
+            padding: 0 5px;
         }
-    }
+        .search-bar {
+            cursor: pointer;
+            input {
+                display: none;
+            }
+        }
     }
 `;
 
 const MobileMenu = styled.div`
-width: 0;
-height: 100vh;
-z-index: 110;
-position: fixed;
-transition: 0.5s;
-top: 0;
-right: 0;
-background-color: white;
-overflow-x: hidden;
-div {
-  padding: 20px 50px;
-  &:first-child {
-    padding-top: 60px;
-  }
-  h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  span {
-    color: #757575;
-  }
-}
-
+        width: 0;
+        height: 100vh;
+        z-index: 110;
+        position: fixed;
+        transition: 0.5s;
+        top: 0;
+        right: 0;
+        background-color: white;
+        overflow-x: hidden;
+        div {
+        padding: 20px 50px;
+        &:first-child {
+            padding-top: 60px;
+        }
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        span {
+            color: #757575;
+        }
+    }
 `;
 
 const MobileSearch = styled.div`
-width: 0;
-height: 100vh;
-visibility: hidden;
-position: fixed;
-transition: 0.5s;
-overflow-y: hidden;
-top: 0;
-right: 0;
-background-color: white;
-.mobile-search__bar {
-  height: 50px;
-  display: flex;
-  width: 100%;
-  padding: 5px;
-  form {
-    width: 100%;
-    padding: 0 5px;
-  }
-  input {
-    border-radius: 5px;
-    height: 100%;
-    width: 100%;
-    background: #f5f5f5;
-    border: 0;
-    padding: 8px 20px;
-  }
-  button {
-    width: 50px;
-    height: 100%;
-    border-radius: 20px;
-    background: #f5f5f5;
-    border: 0;
-    font-size: 1.3rem;
-  }
-}
-.bobile-search__recommend-keyword {
-  padding: 30px;
-  p {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  ul {
-    padding-top: 20px;
-    li {
-      margin-top: 20px;
-      font-size: 1.1rem;
+    width: 0;
+    height: 100vh;
+    visibility: hidden;
+    position: fixed;
+    transition: 0.5s;
+    overflow-y: hidden;
+    top: 0;
+    right: 0;
+    background-color: white;
+    .mobile-search__bar {
+        height: 50px;
+        display: flex;
+        width: 100%;
+        padding: 5px;
+        form {
+            width: 100%;
+            padding: 0 5px;
+        }
+        input {
+            border-radius: 5px;
+            height: 100%;
+            width: 100%;
+            background: #f5f5f5;
+            border: 0;
+            padding: 8px 20px;
+        }
+        button {
+            width: 50px;
+            height: 100%;
+            border-radius: 20px;
+            background: #f5f5f5;
+            border: 0;
+            font-size: 1.3rem;
+            }
     }
-  }
-}
-&.open {
-  z-index: 200;
-  visibility: visible;
-}
+    .bobile-search__recommend-keyword {
+        padding: 30px;
+        p {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        ul {
+            padding-top: 20px;
+            li {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            }
+        }
+    }
+    &.open {
+        z-index: 200;
+        visibility: visible;
+    }
 `;
 
 interface IHeaderProps {
     isLoggedIn: boolean;
-  }
+};
 
 const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
     console.log('header')
@@ -437,7 +436,7 @@ const Header : React.FC<IHeaderProps> = ({isLoggedIn}) => {
                 </div>
             </MobileSearch>
         </>
-    )
-}
+    );
+};
 
 export default Header;

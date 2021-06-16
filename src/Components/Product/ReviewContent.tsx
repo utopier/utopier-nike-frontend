@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { gql, useQuery} from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ReviewCard from './ReviewCard';
 
+import ReviewCard from './ReviewCard';
 import Loader from '../Shared/Loader';
 import Error from '../Shared/Error';
-
 import Modal from '../Shared/Modal';
 import CreateReviewForm from './CreateReviewForm';
 

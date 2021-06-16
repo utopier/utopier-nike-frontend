@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './Routes';
+import { ApolloProvider } from '@apollo/client';
 
 import Client from './Apollo/Client';
-import { ApolloProvider } from '@apollo/client';
+import Routes from './Routes';
 
 
 ReactDOM.render(

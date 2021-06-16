@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
                 </FooterCopy>
             </FooterContainer>
         </>
-    )
-}
+    );
+};
 
 export default Footer;

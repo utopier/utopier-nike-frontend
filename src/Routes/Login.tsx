@@ -1,10 +1,11 @@
 import React, { useEffect,useRef } from 'react';
-import { useInput } from '../Hooks/useInput';
+import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
+
+import { useInput } from '../Hooks/useInput';
 import { isLoggedInVar } from '../Apollo/LocalState';
 
-import styled from 'styled-components';
 
 const LoginWapper = styled.div`
   display: flex;

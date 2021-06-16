@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useInput } from '../Hooks/useInput';
 import { gql, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
+
+import { useInput } from '../Hooks/useInput';
 
 export const SIGN_UP = gql`
   mutation signUp($email: String!, $password: String!, $username: String!) {

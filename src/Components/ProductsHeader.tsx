@@ -1,7 +1,7 @@
 import React from 'react';
-import {getProductsVar} from '../Apollo/LocalState'
-
 import styled from 'styled-components';
+
+import {getProductsVar} from '../Apollo/LocalState'
 
 const ProductsHeaderWapper = styled.div`
   .section-title {
@@ -12,9 +12,9 @@ const ProductsHeaderWapper = styled.div`
     background-color: white;
     padding: 30px;
   }
-  @media (max-width: 960px){
+  @media (max-width: 960px) {
     padding-top: 20px;
-    div{
+    div {
       padding: 0;
       padding-left: 20px;
     }
@@ -25,7 +25,7 @@ const ProductsHeaderWapper = styled.div`
   background-color: white;
   display: flex;
   justify-content: space-between;
-  .section-control{
+  .section-control {
     button {
       background-color: white;
       border: 0;
@@ -43,7 +43,6 @@ const ProductsHeaderWapper = styled.div`
 `;
 
 const ProductsHeader : React.FC = React.memo(() => {
-
   const onClickSorting = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const text = e.currentTarget.innerText;
@@ -57,7 +56,7 @@ const ProductsHeader : React.FC = React.memo(() => {
     } else if ( text === "Oldest"){
       getProductsVar({...getProductsVar(),orderBy:{createdAt: "asc"}})
     } 
-  }
+  };
   
   return (
     <>

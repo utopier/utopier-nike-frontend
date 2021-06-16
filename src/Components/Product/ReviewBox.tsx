@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import ReviewContent from './ReviewContent';
 import styled from 'styled-components';
+
+import ReviewContent from './ReviewContent';
 
 const ReviewButtonWrapper = styled.div`
   border-bottom: 1px solid #e5e5e5;

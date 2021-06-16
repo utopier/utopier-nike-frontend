@@ -1,14 +1,11 @@
 import React from 'react';
 import { gql, useQuery,useLazyQuery, NetworkStatus  } from '@apollo/client';
-import { getProductsVar, productList} from '../Apollo/LocalState'
-
-import {useLocation} from 'react-router-dom'
-
-import ProductCard from '../Components/ProductCard';
-import ProductsHeader from '../Components/ProductsHeader';
-
+import {useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 
+import { getProductsVar, productList} from '../Apollo/LocalState'
+import ProductCard from '../Components/ProductCard';
+import ProductsHeader from '../Components/ProductsHeader';
 import Loader from '../Components/Shared/Loader';
 import Error from '../Components/Shared/Error';
 
@@ -18,7 +15,7 @@ const ProductsWapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   padding: 150px 5px 20px 5px;
-  @media(max-width: 960px){
+  @media(max-width: 960px) {
       padding-top: 100px;
   }
   @media (max-width: 1100px) {
@@ -63,7 +60,7 @@ export const SEARCH_PRODUCTS = gql`
       }
     }
   }
-`
+`;
 
 interface IProductsPageProduct {
   __typename?: string;
@@ -72,15 +69,15 @@ interface IProductsPageProduct {
   subtitle: string;
   price: string;
   imageUrls : IProductPageProductImgUrls[];
-}
+};
 
 interface IProductPageProductImgUrls {
   url: string;
-}
+};
 
 interface IGetProducts {
   getProducts: IProductsPageProduct[];
-}
+};
 
 // export const ME = gql`
 //   query me {
@@ -114,7 +111,7 @@ interface IGetProducts {
 //   product:{id: string};
 // }
 
-let productCount
+let productCount;
 
 const Products : React.FC= React.memo(() => {
   console.log('products Component')

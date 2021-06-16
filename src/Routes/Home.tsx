@@ -2,88 +2,88 @@ import React from "react";
 import styled from "styled-components";
 
 const HomeContainer = styled.div`
-    .mobile-home{
+    .mobile-home {
         display:none;
     }
-    .desktop-home{
+    .desktop-home {
         display:block;
     }
-    @media(max-width: 645px){
-        .mobile-home{
+    @media(max-width: 645px) {
+        .mobile-home {
             display:block;
         }
-        .desktop-home{
+        .desktop-home {
             display:none;
         }
     }
-`
+`;
 
 const DeskTopContainer = styled.div`
-    img{
+    img {
         width: 100%;
     }
-    video{
+    video {
         width: 100%;
     }
-    button{
+    button {
         border-radius: 100px;
         font-size: 20px;
         padding: 5px 20px;
         background-color: black;
         color: white;
     }
-    .home-img-container{
+    .home-img-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items:center;
         padding-bottom: 30px;
-        div{
+        div {
             padding-bottom: 30px;
         }
     }
-    .home-img-container__text{
-        p:first-child{
+    .home-img-container__text {
+        p:first-child {
             font-size: 40px;
             font-weight: 700;
             padding-bottom: 10px;
             text-align: center;
         }
-        p:last-child{
+        p:last-child {
             font-size: 20px;
             font-weight: 400;
             line-height: 1.5;
             text-align: center;
         }
     }
-    .weekend-style{
+    .weekend-style {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding-bottom: 30px;
-        div{
+        div {
             padding-bottom: 30px;
         }
-        button{
+        button {
             margin-left: 5px;
         }
-        .weekend-style__title{
-            h3{
+        .weekend-style__title {
+            h3 {
                 font-size: 23px;
                 font-height: 400;
                 padding-left: 8px;
                 padding-bottom: 20px;
             }
         }
-        .weekend-style__text{
-            p:first-child{
+        .weekend-style__text {
+            p:first-child {
                 font-size: 40px;
                 font-weight: 700;
                 padding-bottom: 10px;
                 text-align: center;
             }
-            p:last-child{
+            p:last-child {
                 font-size: 20px;
                 font-weight: 400;
                 line-height: 1.5;
@@ -91,16 +91,17 @@ const DeskTopContainer = styled.div`
             }
         }
     }
-`
+`;
+
 
 const MobileContainer = styled.div`
-img{
+img {
     width: 100%;
 }
-video{
+video {
     width: 100%;
 }
-button{
+button {
     border-radius: 100px;
     font-size: 16px;
     padding: 5px 20px;
@@ -108,56 +109,56 @@ button{
     color: white;
     outline:none;
 }
-.home-img-container{
+.home-img-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding-bottom: 30px;
-    div{
+    div {
         padding-bottom: 30px;
     }
 }
-.home-img-container__text{
-    p:first-child{
+.home-img-container__text {
+    p:first-child {
         font-size: 29px;
         font-weight: 700;
         padding-bottom: 10px;
         text-align: left;
     }
-    p:last-child{
+    p:last-child {
         font-size: 16px;
         font-weight: 400;
         line-height: 1.5;
         text-align: left;
     }
 }
-.weekend-style{
+.weekend-style {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding-bottom: 30px;
-    div{
+    div {
         padding-bottom: 30px;
     }
-    button{
+    button {
         margin-left: 5px;
     }
-    .weekend-style__title{
-        h3{
+    .weekend-style__title {
+        h3 {
             font-size: 21px;
             font-height: 400;
             padding-left: 8px;
             padding-bottom: 20px;
         }
     }
-    .weekend-style__text{
-        p:first-child{
+    .weekend-style__text {
+        p:first-child {
             font-size: 28px;
             font-weight: 700;
             padding-bottom: 10px;
             text-align: left;
         }
-        p:last-child{
+        p:last-child {
             font-size: 16px;
             font-weight: 400;
             line-height: 1.5;

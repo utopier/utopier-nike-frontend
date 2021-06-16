@@ -49,14 +49,14 @@ const httpLink = new HttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-	const token = localStorage.getItem('token')
+	const token = localStorage.getItem('token');
 	return {
 	  headers: {
 		...headers,
 		authorization: token ? `Bearer ${token}` : '',
 	  },
-	}
-  })
+	};
+});
 
 const wsLink = new WebSocketLink({
   uri:  process.env.NODE_ENV === 'development'
@@ -69,8 +69,7 @@ const wsLink = new WebSocketLink({
     //   authToken: localStorage.getItem('token')
     // },
   },
-  
-})
+});
 
 const splitLink = split(
   ({ query }) => {
