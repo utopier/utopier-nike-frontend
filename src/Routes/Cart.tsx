@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 
-import {cartProductsVar} from '../Apollo/LocalState'
-import CartProductCart from '../Components/Cart/CartProductCard'
+import { cartProductsVar } from '../Apollo/LocalState';
+import CartProductCart from '../Components/Cart/CartProductCard';
 import Loader from '../Components/Shared/Loader';
 import Error from '../Components/Shared/Error';
 
@@ -89,8 +89,6 @@ const CartWrapper = styled.div`
   }
 `;
 
-
-
 const DELETE_PRODUCT_IN_CART = gql`
   mutation deleteProductInCard($cartId: String) {
     deleteProductInCart(cartId: $cartId)
@@ -99,33 +97,34 @@ const DELETE_PRODUCT_IN_CART = gql`
 
 let deletedCartItemId: string;
 
-const Cart : React.FC = React.memo(() => {
-  const [deleteBtnMutation, {data: deleteData , loading: deleteLoading, error: deleteError}] = useMutation(DELETE_PRODUCT_IN_CART);
-  
-  if(deleteLoading) return <Loader/>;
-  if(deleteError) return <Error error={deleteError}/>;
-  
-  if(deleteData && deleteData.deleteProductInCart){
-      const newProdutsInCart = cartProductsVar().filter(({id}) => {
-        return id !== deletedCartItemId
-      })
-      console.log('deletedCartItemId : ',deletedCartItemId);
-      cartProductsVar([...newProdutsInCart])
-      deletedCartItemId = ''
+const Cart: React.FC = React.memo(() => {
+  const [deleteBtnMutation, { data: deleteData, loading: deleteLoading, error: deleteError }] =
+    useMutation(DELETE_PRODUCT_IN_CART);
+
+  if (deleteLoading) return <Loader />;
+  if (deleteError) return <Error error={deleteError} />;
+
+  if (deleteData && deleteData.deleteProductInCart) {
+    const newProdutsInCart = cartProductsVar().filter(({ id }) => {
+      return id !== deletedCartItemId;
+    });
+    console.log('deletedCartItemId : ', deletedCartItemId);
+    cartProductsVar([...newProdutsInCart]);
+    deletedCartItemId = '';
   }
 
-  const onClickDeleteBtn = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickDeleteBtn = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     try {
-      deletedCartItemId = (e.target as HTMLButtonElement).getAttribute('data-id')
+      deletedCartItemId = (e.target as HTMLButtonElement).getAttribute('data-id');
       deleteBtnMutation({
         variables: {
-          cartId: deletedCartItemId as string
+          cartId: deletedCartItemId as string,
         },
       });
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   console.log(cartProductsVar());
   return (
@@ -140,10 +139,11 @@ const Cart : React.FC = React.memo(() => {
           </div>
         </div>
         <div className="cart__body">
-          {Array.isArray(cartProductsVar()) && cartProductsVar().map(({id,product}) => {
+          {Array.isArray(cartProductsVar()) &&
+            cartProductsVar().map(({ id, product }) => {
               return (
                 <>
-                  <CartProductCart id={id} product={product} onClickDeleteBtn={onClickDeleteBtn}/>
+                  <CartProductCart id={id} product={product} onClickDeleteBtn={onClickDeleteBtn} />
                 </>
               );
             })}

@@ -34,12 +34,10 @@ const ReviewContentWrapper = styled.div`
 
 // const DELETE_COMMENT = gql``;
 
-
-
-const ReviewBox = ({ reviewCount }:{reviewCount: number}) => {
+const ReviewBox = ({ reviewCount }: { reviewCount: number }) => {
   const [clickdReviews, setClickedReviews] = useState(false);
 
-  const onClcikReviewsBtn = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onClcikReviewsBtn = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     const reviewsBtnEl = document.getElementById('review-btn');
     const dropdownBtnEl = document.querySelector('.dropdown-btn');

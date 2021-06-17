@@ -3,8 +3,8 @@ import { gql, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useInput } from '../../Hooks/useInput';
-import {GET_REVIEWS} from './ReviewContent'
-import {GET_PRODUCT} from '../../Routes/Product'
+import { GET_REVIEWS } from './ReviewContent';
+import { GET_PRODUCT } from '../../Routes/Product';
 
 const CreateReviewFormWrapper = styled.div`
   height: 100%;
@@ -51,36 +51,36 @@ const CREATE_REVIEW = gql`
   }
 `;
 
-const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
+const CreateReviewForm = React.memo(({ productId }: { productId: string }) => {
   const clickedCreate = React.useRef(false);
-  const [createReviewMutation, { data}] = useMutation(CREATE_REVIEW,{
-    update(cache, {data:{createReview}}){
+  const [createReviewMutation, { data }] = useMutation(CREATE_REVIEW, {
+    update(cache, { data: { createReview } }) {
       console.log('createReview Result Data : ', data);
       clickedCreate.current = false;
-      const {getReviews} = cache.readQuery({query:GET_REVIEWS,variables:{productId}})
+      const { getReviews } = cache.readQuery({ query: GET_REVIEWS, variables: { productId } });
       cache.writeQuery({
-        query:GET_REVIEWS,
-        variables:{productId},
-        data:{
-          getReviews: [...getReviews,{...createReview,commentCount:0}]
-        }
-      })
-      const {getProduct} =cache.readQuery({query:GET_PRODUCT, variables:{id: productId}})
+        query: GET_REVIEWS,
+        variables: { productId },
+        data: {
+          getReviews: [...getReviews, { ...createReview, commentCount: 0 }],
+        },
+      });
+      const { getProduct } = cache.readQuery({ query: GET_PRODUCT, variables: { id: productId } });
       cache.writeQuery({
         query: GET_PRODUCT,
-        variables: {id: productId},
-        data:{
-          getProduct:{...getProduct, reviewCount: getProduct.reviewCount + 1}
-        }
-      })
-    }
+        variables: { id: productId },
+        data: {
+          getProduct: { ...getProduct, reviewCount: getProduct.reviewCount + 1 },
+        },
+      });
+    },
   });
 
   const [title, onChangeTitle] = useInput('');
   const [body, onChangeBody] = useInput('');
 
-  if(clickedCreate.current && localStorage.getItem('token')){
-    console.log('create review remutation...')
+  if (clickedCreate.current && localStorage.getItem('token')) {
+    console.log('create review remutation...');
     createReviewMutation({
       variables: {
         productId: productId + '',
@@ -90,7 +90,7 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
     });
   }
 
-  const onSubmitCreateReview = (e:React.FormEvent<HTMLFormElement>) => {
+  const onSubmitCreateReview = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     clickedCreate.current = true;
     createReviewMutation({
@@ -100,10 +100,8 @@ const CreateReviewForm = React.memo(({ productId }: {productId: string}) => {
         body,
       },
     });
-    (document.getElementsByClassName('modal-close')[0] as HTMLButtonElement).click()
+    (document.getElementsByClassName('modal-close')[0] as HTMLButtonElement).click();
   };
-
-  
 
   return (
     <CreateReviewFormWrapper>

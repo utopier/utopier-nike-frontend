@@ -76,14 +76,14 @@ const SignUp = () => {
   const history = useHistory();
 
   const onSubmitForm = useCallback(
-    async (e:React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      
+
       try {
         signUpMutation({
           variables: { email, password, username },
         });
-        history.push('/login'); 
+        history.push('/login');
       } catch (e) {
         console.error(e);
       }

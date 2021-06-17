@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery, gql, useMutation } from '@apollo/client';
 
-import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
-import {GET_PRODUCT} from '../../Routes/Product'
+import { GET_REVIEWS, IGetReviewsResult } from './ReviewContent';
+import { GET_PRODUCT } from '../../Routes/Product';
 import Modal from '../Shared/Modal';
 import ReviewDetail from './ReviewDetail';
 import UpdateReviewForm from './UpdateReviewForm';
@@ -25,7 +25,7 @@ const ReviewCardWrapper = styled.div`
     font-weight: 700;
   }
   .review-user {
-    display:flex;
+    display: flex;
     justify-content: flex-end;
     color: #828282;
   }
@@ -71,8 +71,8 @@ interface IReviewCardProps {
     createdAt: string;
     body: string;
     commentCount: number;
-    user:IReviewCardPropsUser
-  }
+    user: IReviewCardPropsUser;
+  };
   productId: string;
 }
 
@@ -81,57 +81,62 @@ interface IReviewCardPropsUser {
   username: string;
 }
 
-const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
+const ReviewCard: React.FC<IReviewCardProps> = ({ review, productId }) => {
   const { id, title, user, createdAt, body, commentCount } = review;
   const [openedReviewDetail, setOpenedReviewDetail] = useState(false);
   const [openedUpdateReview, setOpenedUpdateReview] = useState(false);
   const { data, loading, error } = useQuery(ME);
-  const [deleteReviewMutation] = useMutation(DELETE_REVIEW,{
-    update(cache, {data:{deleteReview}}){
-    if(deleteReview){
-      const {getReviews} : IGetReviewsResult = cache.readQuery({query:GET_REVIEWS,variables:{productId}})
-      cache.writeQuery({
-        query:GET_REVIEWS,
-        variables:{productId},
-        data:{
-          getReviews: getReviews.filter((item) => {
-             return item.id !== id;
-          })
-        }
-      })
-      const {getProduct} =cache.readQuery({query:GET_PRODUCT, variables:{id: productId}})
-      cache.writeQuery({
-        query: GET_PRODUCT,
-        variables: {id: productId},
-        data:{
-          getProduct:{...getProduct, reviewCount: getProduct.reviewCount - 1}
-        }
-      })
-    }
-  }});
+  const [deleteReviewMutation] = useMutation(DELETE_REVIEW, {
+    update(cache, { data: { deleteReview } }) {
+      if (deleteReview) {
+        const { getReviews }: IGetReviewsResult = cache.readQuery({ query: GET_REVIEWS, variables: { productId } });
+        cache.writeQuery({
+          query: GET_REVIEWS,
+          variables: { productId },
+          data: {
+            getReviews: getReviews.filter((item) => {
+              return item.id !== id;
+            }),
+          },
+        });
+        const { getProduct } = cache.readQuery({ query: GET_PRODUCT, variables: { id: productId } });
+        cache.writeQuery({
+          query: GET_PRODUCT,
+          variables: { id: productId },
+          data: {
+            getProduct: { ...getProduct, reviewCount: getProduct.reviewCount - 1 },
+          },
+        });
+      }
+    },
+  });
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   if (error) {
     console.log('me error : ', error);
-  };
+  }
 
-  const openReviewDetail = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const openReviewDetail = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOpenedReviewDetail(true);
   };
 
-  const closeReviewDetail = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const closeReviewDetail = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     setOpenedReviewDetail(false);
   };
 
-  const onClickUpdateReviewBtn = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickUpdateReviewBtn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setOpenedUpdateReview(true);
   };
 
-  const closeUpdateReview = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const closeUpdateReview = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     setOpenedUpdateReview(false);
   };
 
-  const onClickDeleteReviewBtn = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickDeleteReviewBtn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const result = window.confirm('삭제하시겠습니까');
     if (result) {
@@ -139,7 +144,7 @@ const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
         variables: {
           reviewId: review.id,
           username: data.me.username,
-        }
+        },
       });
     }
   };
@@ -154,11 +159,17 @@ const ReviewCard : React.FC<IReviewCardProps> = ({ review , productId}) => {
             <button onClick={onClickDeleteReviewBtn}>삭제</button>
             {openedUpdateReview && (
               <Modal visible={openedUpdateReview} closable={true} maskClosable={true} onClose={closeUpdateReview}>
-                <UpdateReviewForm reviewId={id} username={data.me.username} initTitle={title} initBody={body} productId={productId}/>
+                <UpdateReviewForm
+                  reviewId={id}
+                  username={data.me.username}
+                  initTitle={title}
+                  initBody={body}
+                  productId={productId}
+                />
               </Modal>
             )}
           </div>
-        ): null}
+        ) : null}
       </div>
       <div className="review-user">
         <span>{user.username} - </span>

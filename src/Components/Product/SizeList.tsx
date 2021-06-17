@@ -39,7 +39,7 @@ const SizeListHeader = styled.div`
   }
 `;
 
-const SizeList : React.FC = () => {
+const SizeList: React.FC = () => {
   return (
     <>
       <div>
@@ -53,7 +53,7 @@ const SizeList : React.FC = () => {
         </SizeListHeader>
         <SizeListWapper>
           <div className="opt-list">
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">230</label>
               <input
                 type="radio"
@@ -67,7 +67,7 @@ const SizeList : React.FC = () => {
                 value="28"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">234</label>
               <input
                 type="radio"
@@ -81,7 +81,7 @@ const SizeList : React.FC = () => {
                 value="29"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">235</label>
               <input
                 type="radio"
@@ -95,7 +95,7 @@ const SizeList : React.FC = () => {
                 value="30"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">240</label>
               <input
                 type="radio"
@@ -108,7 +108,7 @@ const SizeList : React.FC = () => {
                 value="35"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">245</label>
               <input
                 type="radio"
@@ -134,7 +134,7 @@ const SizeList : React.FC = () => {
                 value="38"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">255</label>
               <input
                 type="radio"
@@ -147,7 +147,7 @@ const SizeList : React.FC = () => {
                 value="39"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">260</label>
               <input
                 type="radio"
@@ -160,7 +160,7 @@ const SizeList : React.FC = () => {
                 value="42"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">265</label>
               <input
                 type="radio"
@@ -173,7 +173,7 @@ const SizeList : React.FC = () => {
                 value="43"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">270</label>
               <input
                 type="radio"
@@ -186,7 +186,7 @@ const SizeList : React.FC = () => {
                 value="46"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">275</label>
               <input
                 type="radio"
@@ -199,7 +199,7 @@ const SizeList : React.FC = () => {
                 value="47"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">280</label>
               <input
                 type="radio"
@@ -212,7 +212,7 @@ const SizeList : React.FC = () => {
                 value="50"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">285</label>
               <input
                 type="radio"
@@ -225,7 +225,7 @@ const SizeList : React.FC = () => {
                 value="51"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">290</label>
               <input
                 type="radio"
@@ -238,7 +238,7 @@ const SizeList : React.FC = () => {
                 value="54"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">295</label>
               <input
                 type="radio"
@@ -252,7 +252,7 @@ const SizeList : React.FC = () => {
                 value="55"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="">300</label>
               <input
                 type="radio"
@@ -265,7 +265,7 @@ const SizeList : React.FC = () => {
                 value="58"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">305</label>
               <input
                 type="radio"
@@ -279,7 +279,7 @@ const SizeList : React.FC = () => {
                 value="59"
               />
             </span>
-            <span className="input-radio" >
+            <span className="input-radio">
               <label className="sd-out">310</label>
               <input
                 type="radio"

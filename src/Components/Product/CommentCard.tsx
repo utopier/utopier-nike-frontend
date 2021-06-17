@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useInput } from '../../Hooks/useInput';
 
-import {GET_REVIEWS, IGetReviewsResult} from './ReviewContent'
-import {GET_COMMNENTS, IGetCommentsResult} from './ReviewDetail'
+import { GET_REVIEWS, IGetReviewsResult } from './ReviewContent';
+import { GET_COMMNENTS, IGetCommentsResult } from './ReviewDetail';
 
 const ME = gql`
   query me {
@@ -22,7 +22,7 @@ const DELETE_COMMENT = gql`
 
 const UPDATE_COMMENT = gql`
   mutation updateComment($commentId: String, $username: String, $text: String) {
-    updateComment(commentId: $commentId, username: $username, text: $text){
+    updateComment(commentId: $commentId, username: $username, text: $text) {
       id
       createdAt
       text
@@ -47,71 +47,71 @@ interface ICommentCardPropsComment {
   user: {
     id: string;
     username: string;
-  }
+  };
 }
 
-const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewId }) => {
+const CommentCard: React.FC<ICommentCardProps> = ({ comment, productId, reviewId }) => {
   const [clickedUpdateComment, setClickedUpdateComment] = useState(false);
   const [updateCommentText, onChnageUpdateCommentText] = useInput(comment.text);
   const { data, error } = useQuery(ME);
-  const [deleteCommentMutation, { data: deleteCommentData }] = useMutation(DELETE_COMMENT,{
-    update(cache, {data:{deleteComment}}){
-      if(deleteComment){
-        const {getComments} : IGetCommentsResult = cache.readQuery({query:GET_COMMNENTS,variables:{reviewId}})
+  const [deleteCommentMutation, { data: deleteCommentData }] = useMutation(DELETE_COMMENT, {
+    update(cache, { data: { deleteComment } }) {
+      if (deleteComment) {
+        const { getComments }: IGetCommentsResult = cache.readQuery({ query: GET_COMMNENTS, variables: { reviewId } });
         cache.writeQuery({
-          query:GET_COMMNENTS,
-          variables:{reviewId},
-          data:{
+          query: GET_COMMNENTS,
+          variables: { reviewId },
+          data: {
             getComments: getComments.filter((item) => {
-               return item.id !== comment.id;
-            })
-          }
-        })
-        const {getReviews} : IGetReviewsResult = cache.readQuery({query:GET_REVIEWS, variables:{productId}})
+              return item.id !== comment.id;
+            }),
+          },
+        });
+        const { getReviews }: IGetReviewsResult = cache.readQuery({ query: GET_REVIEWS, variables: { productId } });
         cache.writeQuery({
           query: GET_REVIEWS,
-          variables:{productId},
-          data:{
+          variables: { productId },
+          data: {
             getReviews: getReviews.map((review) => {
-              if(review.id === reviewId){
-                return {...review, commentCount: review.commentCount - 1}
+              if (review.id === reviewId) {
+                return { ...review, commentCount: review.commentCount - 1 };
               }
-              return review
-            })
-          }
-        })
+              return review;
+            }),
+          },
+        });
       }
-    }
-  })
-
-  const [updateCommentMutation, { data: updateCommentData, error: updateCommentError }] = useMutation(UPDATE_COMMENT, {
-    update(cache, {data:{updateComment}}){
-      const {getComments} = cache.readQuery({query:GET_COMMNENTS,variables:{reviewId}})
-      cache.writeQuery({
-        query:GET_REVIEWS,
-        variables:{reviewId},
-        data:{
-          getComments: [...getComments,updateComment]
-        }
-      })
-      setClickedUpdateComment(!clickedUpdateComment);
-    }
+    },
   });
 
-  if(updateCommentError) {
-    alert(updateCommentError)
+  const [updateCommentMutation, { data: updateCommentData, error: updateCommentError }] = useMutation(UPDATE_COMMENT, {
+    update(cache, { data: { updateComment } }) {
+      const { getComments } = cache.readQuery({ query: GET_COMMNENTS, variables: { reviewId } });
+      cache.writeQuery({
+        query: GET_REVIEWS,
+        variables: { reviewId },
+        data: {
+          getComments: [...getComments, updateComment],
+        },
+      });
+      setClickedUpdateComment(!clickedUpdateComment);
+    },
+  });
+
+  if (updateCommentError) {
+    alert(updateCommentError);
   }
-  
+
   if (error) {
     console.log('me error : ', error);
   }
 
-  const onClickUpdateComment = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickUpdateComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setClickedUpdateComment(!clickedUpdateComment);
   };
 
-  const onClickDeleteComment = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickDeleteComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     e.nativeEvent.stopImmediatePropagation();
 
@@ -124,7 +124,7 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
     console.log(deleteCommentData);
   };
 
-  const onSubmitUpdateComment = (e:React.FormEvent<HTMLFormElement>) => {
+  const onSubmitUpdateComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateCommentMutation({
       variables: {
@@ -135,7 +135,6 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
     });
     console.log(updateCommentData);
   };
-
 
   return (
     <>
@@ -148,7 +147,7 @@ const CommentCard : React.FC<ICommentCardProps> = ({ comment, productId, reviewI
             <button onClick={onClickUpdateComment}>수정</button>
             <button onClick={onClickDeleteComment}>삭제</button>
           </div>
-        ): null}
+        ) : null}
       </div>
       <div className="comment-text">
         {clickedUpdateComment ? (

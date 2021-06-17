@@ -57,8 +57,6 @@ export const GET_PRODUCT = gql`
   }
 `;
 
-
-
 interface IProductPageParams {
   productId: string;
 }
@@ -89,33 +87,44 @@ interface IGetProductVar {
   id: string;
 }
 
-const Product :React.FC = () => {
-  console.log('Product Page Render')
+const Product: React.FC = () => {
+  console.log('Product Page Render');
   const { productId } = useParams<IProductPageParams>();
-  const { data, loading, error, refetch } = useQuery<IGetProductResult,IGetProductVar>(GET_PRODUCT, {
-    variables: { id : productId},
+  const { data, loading, error, refetch } = useQuery<IGetProductResult, IGetProductVar>(GET_PRODUCT, {
+    variables: { id: productId },
   });
 
   console.log(loading);
-  if(loading) return <Loader/>
-  
+  if (loading) return <Loader />;
+
   let errorStatus;
-  if(error) {
+  if (error) {
     errorStatus = error;
     console.log(errorStatus);
     console.log(typeof errorStatus.message);
-    console.log(errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')) ;
-    if (errorStatus || errorStatus.message.match("prisma")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
+    console.log(
+      errorStatus.message.match('prisma') ||
+        errorStatus.message.match('prisma.imageurl.findFirst()') ||
+        errorStatus.message.match('Expected Iterable') ||
+        errorStatus.message.match('max_user_connections'),
+    );
+    if (
+      errorStatus ||
+      errorStatus.message.match('prisma') ||
+      errorStatus.message.match('prisma.imageurl.findFirst()') ||
+      errorStatus.message.match('Expected Iterable') ||
+      errorStatus.message.match('max_user_connections')
+    ) {
       refetch();
       console.log('refetch...');
-      return <Loader/>
+      return <Loader />;
     } else {
-      return <Error error={error}/>;
+      return <Error error={error} />;
     }
   }
 
   console.log(data);
-  const {title, subtitle, price, imageUrls, descriptionPreview, reviewCount} = data.getProduct
+  const { title, subtitle, price, imageUrls, descriptionPreview, reviewCount } = data.getProduct;
   return (
     <>
       {data && data.getProduct && (
@@ -123,18 +132,11 @@ const Product :React.FC = () => {
           <ProductContainer>
             <ImageList imageUrls={imageUrls} />
             <ProductOptContainer>
-              <ProductHeader
-                title={title}
-                subtitle={subtitle}
-                price={price}
-              />
+              <ProductHeader title={title} subtitle={subtitle} price={price} />
               <OptionList optionImgUrls={[]} />
               <SizeList />
               <ButtonGroupBox />
-              <DescriptionBox
-                title={descriptionPreview.title}
-                body={descriptionPreview.body}
-              />
+              <DescriptionBox title={descriptionPreview.title} body={descriptionPreview.body} />
               <ReviewBox reviewCount={reviewCount} />
             </ProductOptContainer>
           </ProductContainer>

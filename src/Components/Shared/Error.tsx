@@ -1,10 +1,10 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface IModalOverlayStyledProps {
   visible: boolean;
-};
+}
 
 const ModalOverlay = styled.div<IModalOverlayStyledProps>`
   box-sizing: border-box;
@@ -63,55 +63,64 @@ interface IErrorModalProps {
   children?: React.ReactNode;
   maskClosable?: boolean;
   closable?: boolean;
-  onClose?: (e:React.MouseEvent<HTMLDivElement, MouseEvent> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClose?: (e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   error?: object;
-};
+}
 
-
-const Error : React.FC<IErrorModalProps> = ({ error,className, visible, children, maskClosable, closable, onClose }) => {
-  const closeBtnRef = useRef(null); 
+const Error: React.FC<IErrorModalProps> = ({
+  error,
+  className,
+  visible,
+  children,
+  maskClosable,
+  closable,
+  onClose,
+}) => {
+  const closeBtnRef = useRef(null);
   // const [keyPressedEscape, setKeyPressedEscape] = useState(false)
 
   useEffect(() => {
     // setKeyPressedEscape(false);
-  
+
     // X Button Focus : Enter시 닫힘
     closeBtnRef.current.focus();
-  
+
     // ESC KeyDown시 닫힘.
     // document.addEventListener('keydown',keyPressEscape)
-  },[]);
-  
+  }, []);
+
   // const keyPressEscape = (e) => {
   //   if(e.key === 'Escape'){
   //     setKeyPressedEscape(true);
   //   }
   // }
 
-  const onMaskClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onMaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {
       onClose(e);
     }
   };
 
-  const close = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const close = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (onClose) {
       onClose(e);
     }
   };
-  console.log('ErrorModal Rendering')
+  console.log('ErrorModal Rendering');
   // console.log('keyPressedEscape : ', keyPressedEscape);
-  console.log('visible : ',visible);
+  console.log('visible : ', visible);
   return (
     <>
       <ModalOverlay visible={visible}>
         <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex={-1} visible={visible}>
           <ModalInner tabIndex={0} className="modal-inner">
-            <div style={{paddingTop: '7px', color: 'black'}}>{error || 'Login 하셔야 합니다.'}</div>
-            {!error && <div style={{paddingTop: '7px'}}>
-             <Link to='/login'>로그인 | </Link> 
-             <Link to='/signup'>회원가입</Link>
-            </div>}
+            <div style={{ paddingTop: '7px', color: 'black' }}>{error || 'Login 하셔야 합니다.'}</div>
+            {!error && (
+              <div style={{ paddingTop: '7px' }}>
+                <Link to="/login">로그인 | </Link>
+                <Link to="/signup">회원가입</Link>
+              </div>
+            )}
             {closable && (
               <button ref={closeBtnRef} className="modal-close" onClick={close}>
                 X

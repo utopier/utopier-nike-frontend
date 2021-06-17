@@ -25,7 +25,7 @@ interface IImageListPropsUrl {
   url: string;
 }
 
-const ImageList : React.FC<IImageListProps>= React.memo(({ imageUrls }) => {
+const ImageList: React.FC<IImageListProps> = React.memo(({ imageUrls }) => {
   return (
     <>
       <ProductImgsContainer>

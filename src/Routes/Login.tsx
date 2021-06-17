@@ -1,11 +1,10 @@
-import React, { useEffect,useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
 import { useInput } from '../Hooks/useInput';
 import { isLoggedInVar } from '../Apollo/LocalState';
-
 
 const LoginWapper = styled.div`
   display: flex;
@@ -81,7 +80,7 @@ const Login: React.FC = () => {
 
   const history = useHistory();
 
-  const onSubmitLoginForm = async (e:React.FormEvent<HTMLFormElement>) => {
+  const onSubmitLoginForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       confirmError.current = false;
@@ -101,7 +100,7 @@ const Login: React.FC = () => {
     }
   }, [data]);
 
-  if(error && !confirmError.current){
+  if (error && !confirmError.current) {
     confirm(error.message);
     confirmError.current = true;
   }
@@ -116,14 +115,7 @@ const Login: React.FC = () => {
         <LoginForm>
           <form onSubmit={onSubmitLoginForm}>
             <div className="input">
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={email}
-                onChange={onChangeEmail}
-                placeholder="Email"
-              />
+              <input type="text" id="email" name="email" value={email} onChange={onChangeEmail} placeholder="Email" />
             </div>
             <div className="input">
               <input

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { gql, useQuery} from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -48,18 +48,17 @@ const ME = gql`
   }
 `;
 
-
 export interface IGetReviewsResult {
-  getReviews: IGetReviewContent[]
+  getReviews: IGetReviewContent[];
 }
 
 export interface IGetReviewContent {
-  id : string;
-  createdAt : string;
-  title : string;
-  body : string;
-  user : IGetReviewContentUser
-  commentCount : number;
+  id: string;
+  createdAt: string;
+  title: string;
+  body: string;
+  user: IGetReviewContentUser;
+  commentCount: number;
 }
 
 interface IGetReviewContentUser {
@@ -67,41 +66,44 @@ interface IGetReviewContentUser {
   username: string;
 }
 
-interface  IGetReviewVar {
+interface IGetReviewVar {
   productId: string;
 }
 
-
-
-const ReviewContent : React.FC = React.memo(() => {
+const ReviewContent: React.FC = React.memo(() => {
   const [openedErrorModal, setOpenedErrorModal] = useState(false);
   const [openCreatedReview, setOpenCreatedReview] = useState(false);
-  const { productId } = useParams<{productId: string}>();
+  const { productId } = useParams<{ productId: string }>();
   const { data: meData } = useQuery(ME);
-  const { data, loading, error, refetch: reviewRefetch } = useQuery<IGetReviewsResult, IGetReviewVar>(GET_REVIEWS, {
+  const {
+    data,
+    loading,
+    error,
+    refetch: reviewRefetch,
+  } = useQuery<IGetReviewsResult, IGetReviewVar>(GET_REVIEWS, {
     variables: {
       productId,
     },
-    fetchPolicy:'cache-and-network',
+    fetchPolicy: 'cache-and-network',
   });
-  
+
   console.log('review loading : ', loading);
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   let errorStatus;
-    if(error){
-      console.log(error);
-      errorStatus = error;
-      console.log('review error :',errorStatus);
-      if(localStorage.getItem('token') && errorStatus) {
-        reviewRefetch();
-        console.log('review refetch...');
-      } else {
-        return <Error error={error}/>;
-      }
+  if (error) {
+    console.log(error);
+    errorStatus = error;
+    console.log('review error :', errorStatus);
+    if (localStorage.getItem('token') && errorStatus) {
+      reviewRefetch();
+      console.log('review refetch...');
+    } else {
+      return <Error error={error} />;
     }
+  }
 
   const openCreateReviewModal = () => {
-    if(meData){
+    if (meData) {
       setOpenCreatedReview(true);
     } else {
       setOpenedErrorModal(true);
@@ -112,8 +114,10 @@ const ReviewContent : React.FC = React.memo(() => {
     setOpenCreatedReview(false);
   };
 
-  console.log(data && data.getReviews)
-  const closeErrorModal = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  console.log(data && data.getReviews);
+  const closeErrorModal = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
     setOpenedErrorModal(false);
   };
 
@@ -124,10 +128,10 @@ const ReviewContent : React.FC = React.memo(() => {
           리뷰 작성하기
         </button>
         {openedErrorModal && (
-              <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
-                <div>{error}</div>
-              </Error>)
-        }
+          <Error visible={openedErrorModal} closable={true} maskClosable={true} onClose={closeErrorModal}>
+            <div>{error}</div>
+          </Error>
+        )}
         {openCreatedReview && (
           <Modal visible={openCreatedReview} closable={true} maskClosable={true} onClose={closeCreateReviewModal}>
             <CreateReviewForm productId={productId} />
@@ -135,13 +139,14 @@ const ReviewContent : React.FC = React.memo(() => {
         )}
       </CreateReviewBtnWrapper>
       <ReviewListWrapper>
-        {data && data.getReviews.map((review) => {
-          return (
-            <>
-              <ReviewCard key={review.id} review={review} productId={productId} />
-            </>
-          );
-        })}
+        {data &&
+          data.getReviews.map((review) => {
+            return (
+              <>
+                <ReviewCard key={review.id} review={review} productId={productId} />
+              </>
+            );
+          })}
       </ReviewListWrapper>
     </>
   );

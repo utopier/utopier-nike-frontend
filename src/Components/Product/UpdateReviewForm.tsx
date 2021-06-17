@@ -3,7 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useInput } from '../../Hooks/useInput';
-import {GET_REVIEWS} from './ReviewContent'
+import { GET_REVIEWS } from './ReviewContent';
 
 const UpdateReviewWrapper = styled.div`
   height: 100%;
@@ -49,18 +49,18 @@ interface IUpdateReviewProps {
   productId: string;
 }
 
-const UpdateReview : React.FC<IUpdateReviewProps> = ({ reviewId, username, initTitle, initBody, productId }) => {
-  const [updateReviewMutation] = useMutation(UPDATE_REVIEW,{
-    update(cache, {data:{updateReview}}){
-      const {getReviews} = cache.readQuery({query:GET_REVIEWS,variables:{productId}})
+const UpdateReview: React.FC<IUpdateReviewProps> = ({ reviewId, username, initTitle, initBody, productId }) => {
+  const [updateReviewMutation] = useMutation(UPDATE_REVIEW, {
+    update(cache, { data: { updateReview } }) {
+      const { getReviews } = cache.readQuery({ query: GET_REVIEWS, variables: { productId } });
       cache.writeQuery({
-        query:GET_REVIEWS,
-        variables:{productId},
-        data:{
-          getReviews: [...getReviews,updateReview]
-        }
-      })
-    }
+        query: GET_REVIEWS,
+        variables: { productId },
+        data: {
+          getReviews: [...getReviews, updateReview],
+        },
+      });
+    },
   });
   const [title, onChangeTitle] = useInput(initTitle);
   const [body, onChangeBody] = useInput(initBody);
@@ -74,9 +74,9 @@ const UpdateReview : React.FC<IUpdateReviewProps> = ({ reviewId, username, initT
         username,
         title,
         body,
-      }
+      },
     });
-    (document.getElementsByClassName('modal-close')[0] as HTMLButtonElement).click()
+    (document.getElementsByClassName('modal-close')[0] as HTMLButtonElement).click();
   };
 
   return (

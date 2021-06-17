@@ -1,8 +1,8 @@
-import { useState, useCallback, ChangeEvent } from "react";
+import { useState, useCallback, ChangeEvent } from 'react';
 
 type onChangeType = (e: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
 
-export const useInput = (initValue = "") => {
+export const useInput = (initValue = '') => {
   const [value, setValue] = useState(initValue);
 
   const handler = useCallback((e) => {
@@ -11,4 +11,3 @@ export const useInput = (initValue = "") => {
 
   return [value, handler, setValue] as [string, onChangeType, typeof setValue];
 };
-

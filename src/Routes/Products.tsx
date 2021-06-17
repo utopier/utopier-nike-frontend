@@ -1,28 +1,27 @@
 import React from 'react';
-import { gql, useQuery,useLazyQuery, NetworkStatus  } from '@apollo/client';
-import {useLocation} from 'react-router-dom';
+import { gql, useQuery, useLazyQuery, NetworkStatus } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getProductsVar, productList} from '../Apollo/LocalState'
+import { getProductsVar, productList } from '../Apollo/LocalState';
 import ProductCard from '../Components/ProductCard';
 import ProductsHeader from '../Components/ProductsHeader';
 import Loader from '../Components/Shared/Loader';
 import Error from '../Components/Shared/Error';
-
 
 const ProductsWapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   padding: 150px 5px 20px 5px;
-  @media(max-width: 960px) {
-      padding-top: 100px;
+  @media (max-width: 960px) {
+    padding-top: 100px;
   }
   @media (max-width: 1100px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 580px) {
-    grid-template-columns: repeat(1, 1fr);  
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -47,15 +46,14 @@ export const GET_PRODUCTS = gql`
   }
 `;
 
-
 export const SEARCH_PRODUCTS = gql`
-  query searchProduct($term: String!){
-    searchProduct(term: $term){
+  query searchProduct($term: String!) {
+    searchProduct(term: $term) {
       id
       title
       subtitle
       price
-      imageUrls{
+      imageUrls {
         url
       }
     }
@@ -68,16 +66,16 @@ interface IProductsPageProduct {
   title: string;
   subtitle: string;
   price: string;
-  imageUrls : IProductPageProductImgUrls[];
-};
+  imageUrls: IProductPageProductImgUrls[];
+}
 
 interface IProductPageProductImgUrls {
   url: string;
-};
+}
 
 interface IGetProducts {
   getProducts: IProductsPageProduct[];
-};
+}
 
 // export const ME = gql`
 //   query me {
@@ -113,69 +111,83 @@ interface IGetProducts {
 
 let productCount;
 
-const Products : React.FC= React.memo(() => {
-  console.log('products Component')
+const Products: React.FC = React.memo(() => {
+  console.log('products Component');
   // useReactiveVar(getProductsVar)
 
-  const {search} = useLocation();
+  const { search } = useLocation();
   const query = new URLSearchParams(search);
   const paramSearchTerm = query.get('searchTerm');
   console.log('paramSearchTerm : ', paramSearchTerm);
 
-  const { loading, error, data, refetch, networkStatus } = useQuery<IGetProducts>(GET_PRODUCTS, {variables:{skip:0, take:10}});
-  const [getNewProducts, {loading: newProductsLoading, error: newProductsError, data: newProductsData}] = useLazyQuery(GET_PRODUCTS);
+  const { loading, error, data, refetch, networkStatus } = useQuery<IGetProducts>(GET_PRODUCTS, {
+    variables: { skip: 0, take: 10 },
+  });
+  const [getNewProducts, { loading: newProductsLoading, error: newProductsError, data: newProductsData }] =
+    useLazyQuery(GET_PRODUCTS);
   // const {data: meData, loading: meLoading, error: meError, refetch: meRefetch} = useQuery<IMeResult>(ME)
-  const [getSearchProducts, {loading: searchProductsLoading, error: searchProductsError, data: searchProductsData}] = useLazyQuery(SEARCH_PRODUCTS);
+  const [getSearchProducts, { loading: searchProductsLoading, error: searchProductsError, data: searchProductsData }] =
+    useLazyQuery(SEARCH_PRODUCTS);
 
-	React.useEffect(() => {
-		window.addEventListener('scroll',handleScroll)
-			return () => {
-			window.removeEventListener('scroll', handleScroll)
-		}
-	})
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
 
   React.useEffect(() => {
     console.log('get searchProducts');
-    getSearchProducts({variables:{term: paramSearchTerm}})
-  },[paramSearchTerm])
+    getSearchProducts({ variables: { term: paramSearchTerm } });
+  }, [paramSearchTerm]);
 
   let errorStatus;
   // console.log('meLoading : ', meLoading);
   console.log('getProducts Loading : ', loading);
-  console.log('newProductsLoading : ',newProductsLoading);
-  console.log('searchProductsLoading : ',searchProductsLoading);
+  console.log('newProductsLoading : ', newProductsLoading);
+  console.log('searchProductsLoading : ', searchProductsLoading);
   console.log(networkStatus);
   console.log(networkStatus === NetworkStatus.refetch);
-  if(loading) return <Loader/>;
+  if (loading) return <Loader />;
 
-  if(error) {
+  if (error) {
     errorStatus = error;
     console.log(errorStatus);
     console.log(typeof errorStatus.message);
-    console.log(errorStatus.message.match("findFirst()")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')) ;
-    console.log("productList is Empty",!!productList());
-    if (!!productList() && errorStatus.message.match("findFirst()")||errorStatus.message.match("prisma.imageurl.findFirst()") || errorStatus.message.match('Expected Iterable') || errorStatus.message.match('max_user_connections')){
+    console.log(
+      errorStatus.message.match('findFirst()') ||
+        errorStatus.message.match('prisma.imageurl.findFirst()') ||
+        errorStatus.message.match('Expected Iterable') ||
+        errorStatus.message.match('max_user_connections'),
+    );
+    console.log('productList is Empty', !!productList());
+    if (
+      (!!productList() && errorStatus.message.match('findFirst()')) ||
+      errorStatus.message.match('prisma.imageurl.findFirst()') ||
+      errorStatus.message.match('Expected Iterable') ||
+      errorStatus.message.match('max_user_connections')
+    ) {
       refetch();
       console.log('refetch...');
       console.log(networkStatus);
       console.log(networkStatus === NetworkStatus.refetch);
       // return <Loader/>;
     } else {
-      return <Error error={error}/>;
+      return <Error error={error} />;
     }
   }
 
-  if(newProductsError) {
+  if (newProductsError) {
     errorStatus = newProductsError;
-    if (errorStatus){
+    if (errorStatus) {
       getNewProducts();
       console.log('getNewProducts...');
     } else {
-      return <Error error={error}/>;
+      return <Error error={error} />;
     }
   }
 
-  if(searchProductsError){
+  if (searchProductsError) {
     console.log('searchProductsError : ', searchProductsError);
   }
 
@@ -191,39 +203,43 @@ const Products : React.FC= React.memo(() => {
   //     return <Error error={error || meError}/>;
   //   }
   // }
-  
+
   const handleScroll = () => {
-    if(document.documentElement.scrollHeight - (document.documentElement.scrollTop + document.documentElement.clientHeight) <= 280){
-      if(getProductsVar().skip < productCount && !paramSearchTerm){
-        getProductsVar({...getProductsVar(),skip:productList().length})
+    if (
+      document.documentElement.scrollHeight -
+        (document.documentElement.scrollTop + document.documentElement.clientHeight) <=
+      280
+    ) {
+      if (getProductsVar().skip < productCount && !paramSearchTerm) {
+        getProductsVar({ ...getProductsVar(), skip: productList().length });
         productCount = productCount + 10;
-        getNewProducts({variables:getProductsVar()});
+        getNewProducts({ variables: getProductsVar() });
       }
-		}		
-   }
+    }
+  };
 
   //  if(meData && meData.me){
   //     console.log('meData : ', meData);
   //     meDataVar({...meData.me})
   //  }
 
-  if (!searchProductsData && data){
-      const getProducts = data.getProducts;
-      if(getProductsVar().skip === 0){
-        productCount = getProducts.length
-        productList([...getProducts]) 
-      }
+  if (!searchProductsData && data) {
+    const getProducts = data.getProducts;
+    if (getProductsVar().skip === 0) {
+      productCount = getProducts.length;
+      productList([...getProducts]);
+    }
   }
 
-  if(searchProductsData){
-    const getProducts = searchProductsData.searchProduct
+  if (searchProductsData) {
+    const getProducts = searchProductsData.searchProduct;
     productList([...getProducts]);
   }
 
-  console.log('newProductsError : ',newProductsError);
-  console.log('newProductsLoading : ',newProductsLoading)
-  if(newProductsData){
-    productList([...productList(), ...newProductsData.getProducts])
+  console.log('newProductsError : ', newProductsError);
+  console.log('newProductsLoading : ', newProductsLoading);
+  if (newProductsData) {
+    productList([...productList(), ...newProductsData.getProducts]);
   }
 
   return (
@@ -231,7 +247,8 @@ const Products : React.FC= React.memo(() => {
       <ProductsContainer>
         <ProductsHeader />
         <ProductsWapper>
-          {productList() && productList().map((product) => (
+          {productList() &&
+            productList().map((product) => (
               <ProductCard
                 key={product.id}
                 id={product.id}
@@ -241,7 +258,7 @@ const Products : React.FC= React.memo(() => {
                 subtitle={product.subtitle}
               />
             ))}
-            {newProductsLoading || newProductsError ? <Loader/> : null}
+          {newProductsLoading || newProductsError ? <Loader /> : null}
         </ProductsWapper>
       </ProductsContainer>
     </>

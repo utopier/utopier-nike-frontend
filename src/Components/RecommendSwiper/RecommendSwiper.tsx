@@ -9,16 +9,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 
 interface IRecommendSwiperProps {
-  imageUrls:IImgUrl[];
+  imageUrls: IImgUrl[];
 }
 
 interface IImgUrl {
   url: string;
 }
 
-const RecommendSwiper : React.FC<IRecommendSwiperProps> =  ({ imageUrls }) => {
-
-
+const RecommendSwiper: React.FC<IRecommendSwiperProps> = ({ imageUrls }) => {
   return (
     <>
       <div
@@ -35,17 +33,17 @@ const RecommendSwiper : React.FC<IRecommendSwiperProps> =  ({ imageUrls }) => {
         <span>추천상품</span>
       </div>
       <Swiper
-      spaceBetween={50}
-      slidesPerView={3}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      ...
-    </Swiper>
+        spaceBetween={50}
+        slidesPerView={3}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        ...
+      </Swiper>
     </>
   );
 };

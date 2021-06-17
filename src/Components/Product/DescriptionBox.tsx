@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const DescriptionContainer = styled.div`
   padding: 20px 0;
@@ -26,11 +26,11 @@ const DescriptionContainer = styled.div`
 `;
 
 interface IDescriptionBoxProps {
-    title: string;
-    body: string;
+  title: string;
+  body: string;
 }
 
-const DescriptionBox : React.FC<IDescriptionBoxProps>= React.memo(({ title, body }) => {
+const DescriptionBox: React.FC<IDescriptionBoxProps> = React.memo(({ title, body }) => {
   return (
     <DescriptionContainer>
       <h3>{title}</h3>

@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {getProductsVar} from '../Apollo/LocalState'
+import { getProductsVar } from '../Apollo/LocalState';
 
 const ProductsHeaderWapper = styled.div`
   .section-title {
     font-size: 22px;
     font-weight: 500;
   }
-  div{
+  div {
     background-color: white;
     padding: 30px;
   }
@@ -30,7 +30,7 @@ const ProductsHeaderWapper = styled.div`
       background-color: white;
       border: 0;
       font-size: 0.9rem;
-      color: #8d8d8d
+      color: #8d8d8d;
     }
   }
   @media (max-width: 550px) {
@@ -42,22 +42,22 @@ const ProductsHeaderWapper = styled.div`
   }
 `;
 
-const ProductsHeader : React.FC = React.memo(() => {
-  const onClickSorting = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+const ProductsHeader: React.FC = React.memo(() => {
+  const onClickSorting = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const text = e.currentTarget.innerText;
 
-    if( text === "Expensive" ){   
-      getProductsVar({...getProductsVar(),orderBy:{price: "desc"}})
-    } else if ( text === "Cheap"){
-      getProductsVar({...getProductsVar(),orderBy:{price: "asc"}})
-    } else if ( text === "Newst"){
-      getProductsVar({...getProductsVar(),orderBy:{createdAt: "desc"}})
-    } else if ( text === "Oldest"){
-      getProductsVar({...getProductsVar(),orderBy:{createdAt: "asc"}})
-    } 
+    if (text === 'Expensive') {
+      getProductsVar({ ...getProductsVar(), orderBy: { price: 'desc' } });
+    } else if (text === 'Cheap') {
+      getProductsVar({ ...getProductsVar(), orderBy: { price: 'asc' } });
+    } else if (text === 'Newst') {
+      getProductsVar({ ...getProductsVar(), orderBy: { createdAt: 'desc' } });
+    } else if (text === 'Oldest') {
+      getProductsVar({ ...getProductsVar(), orderBy: { createdAt: 'asc' } });
+    }
   };
-  
+
   return (
     <>
       <ProductsHeaderWapper>
