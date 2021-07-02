@@ -1,5 +1,4 @@
 # Nike Clone
-- **URL** : https://utopier.github.io/utopier-nike-frontend  
 - **Feature Video List** : https://www.youtube.com/playlist?list=PLshiIDc3Xos1ZKZ7kXDgkKMGLr2gZNj0d
 - **Repository**
     - Backend GraphAPI Repository : https://github.com/utopier/utopier-nike-backend
